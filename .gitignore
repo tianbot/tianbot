@@ -43,9 +43,8 @@
 *.pgm
 
 # speciic cfg
-99.my_tianracer.sh.em
+99.my_tianbot.sh.em
 tianbot_office_*.yaml
 # unused file
 imgui.ini
 .vscode
-*/.ipynb_checkpoints/*
