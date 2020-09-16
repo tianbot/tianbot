@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+    <include file="$(find tianbot_bringup)/launch/description.launch">
+    <include file="$(find tianbot_bringup)/launch/base.launch" />
+    <include file="$(find tianbot_bringup)/launch/lidar.launch" />
+    <include file="$(find tianbot_bringup)/launch/rgbd_camera.launch" />
+    <include file="$(find tianbot_bringup)/launch/usb_cam.launch" />
+    <include file="$(find tianbot_bringup)/launch/gps.launch" />
+</launch>

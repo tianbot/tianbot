@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="lidar_ip" default="$(optenv TIANBOT_LIDAR_PORT 192.168.1.10" />
+    <arg name="lidar_name" default="osight_lidar" />
+    <arg name="frame_id" default="laser" />
+    <node pkg="osight_lidar" type="osight_lidar_node" name="$(arg lidar_name)" output="screen">
+        <param name="lidar_ip" type="string" value="$(arg lidar_ip)"/>
+        <param name="frame_id" type="string" value="$(arg frame_id)"/>
+        <param name="angle_max"  value="2.3562"/>
+        <param name="angle_min"  value="-2.3562"/>
+    </node>
+</launch>

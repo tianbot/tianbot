@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="tianbot_base" default="$(optenv TIANBOT_BASE tianbot_omni_06q1)" />
+    <!--  Navigation -->
+    <include if="$(eval 'tianbot_omni' in tianbot_base)" file="$(find tianbot_navigation)/launch/includes/tianbot_omni_move_base.launch.xml" />
+    <include if="$(eval 'tianrover' in tianbot_base)" file="$(find tianbot_navigation)/launch/includes/tianrover_move_base.launch.xml" />
+    <include if="$(eval 'tianbot_mini' in tianbot_base)" file="$(find tianbot_navigation)/launch/includes/tianbot_mini_move_base.launch.xml" />
+</launch>

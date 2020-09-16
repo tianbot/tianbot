@@ -1,0 +1,22 @@
+1599189434290	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile3yICJV"
+/usr/lib/firefox/browser/defaults/preferences/syspref.js:10: prefs parse error: unknown keyword
+/usr/lib/firefox/browser/defaults/preferences/syspref.js:12: prefs parse error: unknown keyword
+/usr/lib/firefox/browser/defaults/preferences/syspref.js:13: prefs parse error: unknown keyword
+/usr/lib/firefox/browser/defaults/preferences/syspref.js:14: prefs parse error: unknown keyword
+/usr/lib/firefox/browser/defaults/preferences/syspref.js:17: prefs parse error: unknown keyword
+/usr/lib/firefox/browser/defaults/preferences/syspref.js:36: prefs parse error: unknown keyword
+/usr/lib/firefox/browser/defaults/preferences/syspref.js:37: prefs parse error: unknown keyword
+/usr/lib/firefox/browser/defaults/preferences/syspref.js:40: prefs parse error: unknown keyword
+/usr/lib/firefox/browser/defaults/preferences/syspref.js:43: prefs parse error: unknown keyword
+/usr/lib/firefox/browser/defaults/preferences/syspref.js:46: prefs parse error: unknown keyword
+/usr/lib/firefox/browser/defaults/preferences/syspref.js:47: prefs parse error: unknown keyword
+1599189434687	addons.webextension.doh-rollout@mozilla.org	WARN	Loading extension 'doh-rollout@mozilla.org': Reading manifest: Invalid extension permission: networkStatus
+1599189435087	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1599189435087	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1599189435087	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1599189435088	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1599189436661	Marionette	INFO	Listening on port 46299
+1599189436707	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.aiimooc.com/file/script/jquery.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://www.aiimooc.com/file/script/jquery.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+1599189640924	Marionette	INFO	Stopped listening on port 46299

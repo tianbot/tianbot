@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="base" default="$(optenv TIANBOT_BASE tianbot_omni)" doc="mobile base type [tianbot, tianrover, tianbot_omni, tianbot_mini]"/>
+  <arg name="serial_port" default="$(optenv TIANBOT_BASE_PORT /dev/ttyUSB1)" />
+  <include file=$(find tianbot_bringup)/launch/includes/$(arg base)/mobile_base.launch.xml>
+    <arg name="serial_port" value="$(arg serial_port)"/>
+  </node>
+</launch>

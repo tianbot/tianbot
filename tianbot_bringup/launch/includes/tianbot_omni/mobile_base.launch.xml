@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="serial_port" />
+  <include file=$(find tianboard)/launch/tianboard.launch>
+    <arg name="serial_port" value="$(arg serial_port)"/>
+  </node>
+</launch>
