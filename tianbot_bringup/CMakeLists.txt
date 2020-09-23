@@ -105,7 +105,7 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/99.my_tianracer.sh.em")
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/99.my_tianbot.sh.em")
   catkin_add_env_hooks(99.my_tianbot SHELLS sh DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/env-hooks)
 else()
   catkin_add_env_hooks(99.default_tianbot SHELLS sh DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/env-hooks)

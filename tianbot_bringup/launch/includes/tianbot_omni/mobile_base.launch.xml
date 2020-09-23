@@ -2,7 +2,11 @@
 
 <launch>
   <arg name="serial_port" />
-  <include file="$(find tianboard)/launch/tianboard.launch">
-    <arg name="serial_port" value="$(arg serial_port)"/>
-  </include>
+  <node pkg="tianboard" type="tianboard_node" name="tianboard" output="screen">
+    <param name="serial_port" type="string" value="$(arg serial_port)"/>
+    <remap from="tianboard/imu" to="imu">
+    <remap from="tianboard/odom" to="odom">
+    <remap from="tianboard/cmd_vel" to="cmd_vel">
+    <remap from="tianboard/uwb" to="uwb">    
+  </node>
 </launch>
