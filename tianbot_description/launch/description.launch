@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="base" default="$(optenv TIANBOT_BASE tianbot_omni)" />
+  <arg name="type" default="$(optenv TIANBOT_TYPE 06q1)" />
+
+  <include file="$(find tianbot_description)/launch/includes/$(arg base)_$(arg type).launch.xml" />
+
+</launch>
