@@ -7,6 +7,11 @@
   - rviz view
  -->
 <launch>
+
+    <arg name="tianbot_base" default="$(optenv TIANBOT_BASE tianbot_omni)" />
+    <arg name="car_type" default="$(optenv TIANBOT_BASE_TYPE 06q1)" doc="mobile base type [061q]"/>
+    <arg name="car_name" default="$(optenv TIANBOT_NAME)" doc="car name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+
     <arg name="use_rviz" default="false" />
     <!-- for amcl -->
     <arg name="init_x" default="0.0" />
@@ -15,7 +20,7 @@
     <!-- for map server -->
     <arg name="map_file" default="$(optenv TIANBOT_MAP_FILE $(find tianbot_slam)/maps/tianbot_office.yaml)" />
     <!-- for navigation -->
-    <arg name="tianbot_base" default="$(optenv TIANBOT_BASE tianbot_omni_06q1)" />
+
 
     <!-- Map server -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
@@ -23,7 +28,7 @@
     <!-- Localization -->
     <!-- AMCL -->
     <!-- Omni -->
-    <include if="$(eval 'tianbot_omni' in tianbot_base)" file="$(find tianbot_navigation)/launch/includes/tianbot_omni_amcl.launch.xml">
+    <include file="$(find tianbot_navigation)/launch/includes/$(arg tianbot_base)/$(arg car_type)_amcl.launch.xml">
         <arg name="init_x" value="$(arg init_x)"/>
         <arg name="init_y" value="$(arg init_y)"/>
         <arg name="init_a" value="$(arg init_a)"/>
@@ -36,7 +41,7 @@
     </include>
 
     <!--  Navigation -->
-    <include file="$(find tianbot_navigation)/launch/includes/tianbot_move_base.launch.xml" />
+    <include file="$(find tianbot_navigation)/launch/includes/$(arg tianbot_base)/$(arg car_type)_move_base.launch.xml" />
 
     <!--  Visualisation -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tianbot_rviz)/rviz_cfg/teb_navigation.rviz" if="$(arg use_rviz)" />

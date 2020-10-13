@@ -3,6 +3,7 @@
 <launch>
     <arg name="lidar"/>
     <arg name="serial_port"           default="$(optenv TIANBOT_LIDAR_PORT /dev/ttyUSB0)" />
+    <arg name="car_name" default="$(optenv TIANBOT_NAME)" doc="car name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
 
     <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
         <param name="serial_port"         type="string" value="$(arg serial_port)"/>
@@ -21,7 +22,7 @@
     <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter" >
 	<rosparam command="load" file="$(find tianbot_bringup)/param/tianbot_laser_config.yaml" />
 	<remap from="scan" to="scan_raw"/>
-	<remap from="scan_filtered" to="scan"/>
+	<remap from="scan_filtered" to="$(arg car_name)/scan"/>
     </node>
    
 

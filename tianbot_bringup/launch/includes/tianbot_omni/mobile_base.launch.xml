@@ -2,11 +2,12 @@
 
 <launch>
   <arg name="serial_port" />
+  <arg name="car_name" />
   <node pkg="tianboard" type="tianboard_node" name="tianboard" output="screen">
     <param name="serial_port" type="string" value="$(arg serial_port)"/>
-    <remap from="tianboard/imu" to="imu" />
-    <remap from="tianboard/odom" to="odom" />
-    <remap from="tianboard/cmd_vel" to="cmd_vel" />
-    <remap from="tianboard/uwb" to="uwb" />    
+    <remap from="tianboard/imu" to="$(arg car_name)/imu" />
+    <remap from="tianboard/odom" to="$(arg car_name)/odom" />
+    <remap from="tianboard/cmd_vel" to="$(arg car_name)/cmd_vel" />
+    <remap from="tianboard/uwb" to="$(arg car_name)/uwb" /> 
   </node>
 </launch>
