@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<launch>
+  
+  <arg name="odom_frame_id"   default="odom"/>
+  <arg name="base_frame_id"   default="base_link"/>
+  <arg name="global_frame_id" default="map"/>
+  <arg name="odom_topic" default="/tianboard/odom" />
+  <arg name="laser_topic" default="scan" />
+  <arg name="tianbot_base" default="$(optenv TIANBOT_BASE tianbot_omni)" />
+  <arg name="car_type" default="$(optenv TIANBOT_BASE_TYPE 06q1)" doc="mobile base type [061q]"/>
+  <arg name="car_name" default="$(optenv TIANBOT_NAME)" doc="car name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+  <arg name="local_planner" defualt="$(optenv TIANBOT_LOCAL_PLANNER eband)" doc="base, dwa, dwb, eband, teb" />
+
+if="$(eval lidar=='osight_lidar')"
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <!-- local planner -->
+    <param if="$(eval local_planner=='base')" name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+    <param if="$(eval local_planner=='dwa')" name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+    <param if="$(eval local_planner=='eband')" name="base_local_planner" value="eband_local_planner/EBandPlannerROS" />
+    <param if="$(eval local_planner=='teb')" name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/move_base_params.yaml" command="load" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/$(arg local_planner)_local_planner_params.yaml" command="load" />
+    <!-- external params file that could be loaded into the move_base namespace -->
+    
+    <!-- reset frame_id parameters using user input data -->    
+
+
+    <param name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
+    <param name="global_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
+    <param name="local_costmap/global_frame" value="$(arg odom_frame_id)"/>
+    <param name="local_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
+    <param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame_id)"/>
+
+    <remap from="cmd_vel" to="tianboard/cmd_vel"/>
+    <remap from="odom" to="$(arg odom_topic)"/>
+    <remap from="scan" to="$(arg laser_topic)"/>
+  </node>
+</launch>
