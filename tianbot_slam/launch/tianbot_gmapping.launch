@@ -2,12 +2,12 @@
 
 <launch>
     <arg name="base" default="$(optenv TIANBOT_BASE tianbot_omni)" doc="mobile base type [tianbot, tianrover, tianbot_omni, tianbot_mini]"/>
-    <arg name="car_type" default="$(optenv TIANBOT_BASE_TYPE 06q1)" doc="mobile base type [tianbot, tianrover, tianbot_omni, tianbot_mini]"/>
-    <arg name="car_name" default="$(optenv TIANBOT_NAME)" doc="car name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+    <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [06q1, 06q2, 08q1, 08q2, 08q8, etc..]"/>
+    <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
     <!-- gmapping -->
     <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
         <rosparam file="$(find tianbot_slam)/configuration_files/$(arg base)/$(arg car_type)_gmapping.yaml" command="load" />
-        <remap from="scan" to="$(arg car_name)/scan"/>
+        <remap from="scan" to="$(arg robot_name)/scan"/>
         <param name="odom_frame" value="odom"/>
         <param name="base_frame" value="base_link"/>
     </node>

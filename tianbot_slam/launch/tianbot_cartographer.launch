@@ -1,8 +1,8 @@
 <!-- cartographer slam-->
 <launch>
   <arg name="base" default="$(optenv TIANBOT_BASE tianbot_omni)" doc="mobile base type [tianbot, tianrover, tianbot_omni, tianbot_mini]"/>
-  <arg name="car_type" default="$(optenv TIANBOT_BASE_TYPE 06q1)" doc="mobile base type [tianbot, tianrover, tianbot_omni, tianbot_mini]"/>
-  <arg name="car_name" default="$(optenv TIANBOT_NAME)" doc="car name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+  <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [06q1, 06q2, 08q1, 08q2, 08q8, etc..]"/>
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
 
   <param name="/use_sim_time" value="false" />
   <node name="cartographer_node" pkg="cartographer_ros"
@@ -10,9 +10,9 @@
           -configuration_directory $(find tianbot_slam)/configuration_files/$(arg base)
           -configuration_basename $(arg car_type)_cartographer.lua"
       output="screen">
-    <remap from="scan" to="$(arg car_name)/scan" />
-    <remap from="odom" to="$(arg car_name)/odom" />
-    <remap from="imu" to="$(arg car_name)/imu" />
+    <remap from="scan" to="$(arg robot_name)/scan" />
+    <remap from="odom" to="$(arg robot_name)/odom" />
+    <remap from="imu" to="$(arg robot_name)/imu" />
   </node>
 
   <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"

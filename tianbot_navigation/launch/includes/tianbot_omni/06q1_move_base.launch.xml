@@ -9,7 +9,7 @@
   <arg name="laser_topic" default="scan" />
   <arg name="tianbot_base" default="$(optenv TIANBOT_BASE tianbot_omni)" />
   <arg name="car_type" default="$(optenv TIANBOT_BASE_TYPE 06q1)" doc="mobile base type [061q]"/>
-  <arg name="car_name" default="$(optenv TIANBOT_NAME)" doc="car name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
   <arg name="local_planner" defualt="$(optenv TIANBOT_LOCAL_PLANNER eband)" doc="base, dwa, dwb, eband, teb" />
 
 if="$(eval lidar=='osight_lidar')"
