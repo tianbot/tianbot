@@ -2,9 +2,14 @@
 
 <launch>
   <arg name="serial_port" />
-  <arg name="robot_name" />
-  <node pkg="tianboard" type="tianboard_node" name="tianboard" output="screen">
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+  <arg name="base_frame" value="base_footprint" />
+  <arg name="odom_frame" value="odom" />
+
+  <node pkg="tianboard" type="tianboard_node" name="tianbot_omni" output="screen">
     <param name="serial_port" type="string" value="$(arg serial_port)"/>
+    <param name="base_frame" type="string" value="$(arg base_frame)"/>
+    <param name="odom_frame" type="string" value="$(arg odom_frame)"/>
     <remap from="tianboard/imu" to="$(arg robot_name)/imu" />
     <remap from="tianboard/odom" to="$(arg robot_name)/odom" />
     <remap from="tianboard/cmd_vel" to="$(arg robot_name)/cmd_vel" />
