@@ -8,7 +8,7 @@
   <arg name="odom_topic" default="/tianboard/odom" />
   <arg name="laser_topic" default="scan" />
   <arg name="tianbot_base" default="$(optenv TIANBOT_BASE tianbot_omni)" />
-  <arg name="car_type" default="$(optenv TIANBOT_BASE_TYPE 06q1)" doc="mobile base type [061q]"/>
+    <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [06q1, 06q2, 08q1, 08q2, 08q8, etc..]"/>
   <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
   <arg name="local_planner" defualt="$(optenv TIANBOT_LOCAL_PLANNER eband)" doc="base, dwa, dwb, eband, teb" />
 

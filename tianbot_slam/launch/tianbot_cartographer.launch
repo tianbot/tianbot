@@ -8,7 +8,7 @@
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
           -configuration_directory $(find tianbot_slam)/configuration_files/$(arg base)
-          -configuration_basename $(arg car_type)_cartographer.lua"
+          -configuration_basename $(arg base_model)_cartographer.lua"
       output="screen">
     <remap from="scan" to="$(arg robot_name)/scan" />
     <remap from="odom" to="$(arg robot_name)/odom" />

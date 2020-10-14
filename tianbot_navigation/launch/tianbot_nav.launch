@@ -9,7 +9,7 @@
 <launch>
 
     <arg name="tianbot_base" default="$(optenv TIANBOT_BASE tianbot_omni)" />
-    <arg name="car_type" default="$(optenv TIANBOT_BASE_TYPE 06q1)" doc="mobile base type [061q]"/>
+    <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [06q1, 06q2, 08q1, 08q2, 08q8, etc..]"/>
     <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
 
     <arg name="use_rviz" default="false" />
@@ -28,7 +28,7 @@
     <!-- Localization -->
     <!-- AMCL -->
     <!-- Omni -->
-    <include file="$(find tianbot_navigation)/launch/includes/$(arg tianbot_base)/$(arg car_type)_amcl.launch.xml">
+    <include file="$(find tianbot_navigation)/launch/includes/$(arg tianbot_base)/$(arg base_model)_amcl.launch.xml">
         <arg name="init_x" value="$(arg init_x)"/>
         <arg name="init_y" value="$(arg init_y)"/>
         <arg name="init_a" value="$(arg init_a)"/>
@@ -41,7 +41,7 @@
     </include>
 
     <!--  Navigation -->
-    <include file="$(find tianbot_navigation)/launch/includes/$(arg tianbot_base)/$(arg car_type)_move_base.launch.xml" />
+    <include file="$(find tianbot_navigation)/launch/includes/$(arg tianbot_base)/$(arg base_model)_move_base.launch.xml" />
 
     <!--  Visualisation -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tianbot_rviz)/rviz_cfg/teb_navigation.rviz" if="$(arg use_rviz)" />
