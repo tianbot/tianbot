@@ -14,6 +14,6 @@
         <param name="frame_id" type="string" value="$(arg frame_id)"/>
         <param name="angle_max"  value="2.3562"/>
         <param name="angle_min"  value="-2.3562"/>
-	      <remap from="osight_lidar/scan" to="scan" />
+	      <remap from="$(arg lidar_name)/scan" to="$(arg robot_name)/scan" />
     </node>
 </launch>

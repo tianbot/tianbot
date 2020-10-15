@@ -8,7 +8,7 @@
   <arg name="odom_topic" default="/tianboard/odom" />
   <arg name="laser_topic" default="scan" />
   <arg name="tianbot_base" default="$(optenv TIANBOT_BASE tianbot_omni)" />
-    <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [06q1, 06q2, 08q1, 08q2, 08q8, etc..]"/>
+  <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [06q1, 06q2, 08q1, 08q2, 08q8, etc..]"/>
   <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
   <arg name="local_planner" defualt="$(optenv TIANBOT_LOCAL_PLANNER eband)" doc="base, dwa, dwb, eband, teb" />
 
@@ -29,15 +29,23 @@ if="$(eval lidar=='osight_lidar')"
     <!-- external params file that could be loaded into the move_base namespace -->
     
     <!-- reset frame_id parameters using user input data -->    
-
+    <param name="local_costmap/robot_base_frame" value="/$(arg robot_name)/base_footprint"/>
+    <param name="global_costmap/robot_base_frame" value="/$(arg robot_name)/base_footprint"/>
+    <param name="local_costmap/point_cloud_sensor/topic" value="/$(arg robot_name)/camera/depth/points"/>
+    <param name="global_costmap/point_cloud_sensor/topic" value="/$(arg robot_name)/camera/depth/points"/>
+    <param name="local_costmap/point_cloud_sensor/sensor_frame" value="/$(arg robot_name)/camera_depth_frame"/>
+    <param name="global_costmap/point_cloud_sensor/sensor_frame" value="/$(arg robot_name)/camera_depth_frame"/>
+    <param name="local_costmap/scan/sensor_frame" value="/$(arg robot_name)/camera_depth_frame"/>
+    <param name="global_costmap/scan/sensor_frame" value="/$(arg robot_name)/camera_depth_frame"/>
+    <param name="local_costmap/scan/topic" value="/$(arg robot_name)/scan"/>
+    <param name="global_costmap/scan/topic" value="/$(arg robot_name)/scan"/>
 
     <param name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
     <param name="global_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
     <param name="local_costmap/global_frame" value="$(arg odom_frame_id)"/>
     <param name="local_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
-    <param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame_id)"/>
 
-    <remap from="cmd_vel" to="tianboard/cmd_vel"/>
+    <remap from="cmd_vel" to="$(arg robot_name)/cmd_vel"/>
     <remap from="odom" to="$(arg odom_topic)"/>
     <remap from="scan" to="$(arg laser_topic)"/>
   </node>
