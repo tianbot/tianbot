@@ -44,7 +44,8 @@
 
 # speciic cfg
 99.my_tianbot.sh.em
-tianbot_office_*.yaml
+tianbot_office*.yaml
+tianbot_maps*.yaml
 # unused file
 imgui.ini
 .vscode
