@@ -12,6 +12,8 @@
 : ${TIANBOT_LIDAR_PORT:=/dev/osight_lidar} # /dev/ttyUSB0 
 : ${TIANBOT_GPS:=none} # none, nmea0183
 : ${TIANBOT_JOY_MODE:=X} # logitech joy mode X, D
+: ${TIANBOT_NAME:=""}  #name of the robot, only used for multi robot
+: ${TIANBOT_LOCAL_PLANNER:=base} # base, teb, dwa, eband, etc.
 
 
 #Exports
@@ -26,3 +28,5 @@ export TIANBOT_LIDAR_IP
 export TIANBOT_LIDAR_PORT
 export TIANBOT_GPS
 export TIANBOT_JOY_MODE
+export TIANBOT_NAME
+export TIANBOT_LOCAL_PLANNER

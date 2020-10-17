@@ -10,9 +10,9 @@
     <param name="serial_port" type="string" value="$(arg serial_port)"/>
     <param name="base_frame" type="string" value="$(arg robot_name)/$(arg base_frame)"/>
     <param name="odom_frame" type="string" value="$(arg robot_name)/$(arg odom_frame)"/>
-    <remap from="tianboard/imu" to="$(arg robot_name)/imu" />
-    <remap from="tianboard/odom" to="$(arg robot_name)/odom" />
-    <remap from="tianboard/cmd_vel" to="$(arg robot_name)/cmd_vel" />
-    <remap from="tianboard/uwb" to="$(arg robot_name)/uwb" /> 
+    <remap from="tianbot_omni/imu" to="$(arg robot_name)/imu" />
+    <remap from="tianbot_omni/odom" to="$(arg robot_name)/odom" />
+    <remap from="tianbot_omni/cmd_vel" to="$(arg robot_name)/cmd_vel" />
+    <remap from="tianbot_omni/uwb" to="$(arg robot_name)/uwb" /> 
   </node>
 </launch>
