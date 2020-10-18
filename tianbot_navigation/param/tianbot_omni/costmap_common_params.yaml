@@ -1,18 +1,14 @@
 max_obstacle_height: 0.60  # assume something like an arm is mounted on top of the robot
 
-# robot_radius: 0.20  # distance a circular robot should be clear of the obstacle (kobuki: 0.18)
-
-# footprint should be include in another file so can be include according to the base model
+# footprint included in another file so can be include according to the base model
 # 06 series [[0.2, 0.15], [0.2, -0.15], [-0.2, -0.15], [-0.2, 0.15]]
 # 08q1 and 08q2 [[0.27, 0.22], [0.27, -0.22], [-0.27, -0.22], [-0.27, 0.22]]
 # footprint: [[0.2, 0.15], [0.2, -0.15], [-0.2, -0.15], [-0.2, 0.15]]
-# footprint_padding: 0.01
+footprint_padding: 0.01
 
-# map_type: voxel
-
-obstacle_layer:
-  enabled:              true
-  max_obstacle_height:  0.6
+obstacle_layer: 
+  enabled: true
+  observation_sources: scan
   origin_z:             0.0
   z_resolution:         0.2
   z_voxels:             2
@@ -26,23 +22,25 @@ obstacle_layer:
   z_resolution: 0.2
   z_voxels: 2
   publish_voxel_map: true
-  observation_sources:  scan
   scan:
     data_type: LaserScan
     topic: scan
     marking: true
     clearing: true
-    min_obstacle_height: 0.25
-    max_obstacle_height: 0.35
+    #    uncomment the following two lines when the observation source is pointcloud
+    #    pay much attention to the range of the obstacles
+    #    min_obstacle_height: 0.05
+    #    max_obstacle_height: 0.55
+
 
   # for debugging only, let's you see the entire voxel grid
 
 #cost_scaling_factor and inflation_radius were now moved to the inflation_layer ns
-inflation_layer:
+inflation_layer: 
   enabled:              true
   cost_scaling_factor:  5.0  # exponential rate at which the obstacle cost drops off (default: 10)
   inflation_radius:     0.5  # max. distance from an obstacle at which costs are incurred for planning paths.
 
-static_layer:
+static_layer: 
   enabled:              true
   

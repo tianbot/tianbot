@@ -19,6 +19,9 @@
     <param if="$(eval local_planner=='eband')" name="base_local_planner" value="eband_local_planner/EBandPlannerROS" />
     <param if="$(eval local_planner=='teb')" name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
     
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/footprint_$(arg base_model).yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/footprint_$(arg base_model).yaml" command="load" ns="local_costmap" />
+
     <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/local_costmap_params.yaml" command="load" />
@@ -28,21 +31,14 @@
     <!-- external params file that could be loaded into the move_base namespace -->
     
     <!-- reset frame_id parameters using user input data -->    
-    <param name="local_costmap/robot_base_frame" value="/$(arg robot_name)/base_footprint"/>
-    <param name="global_costmap/robot_base_frame" value="/$(arg robot_name)/base_footprint"/>
-    <param name="local_costmap/point_cloud_sensor/topic" value="/$(arg robot_name)/camera/depth/points"/>
-    <param name="global_costmap/point_cloud_sensor/topic" value="/$(arg robot_name)/camera/depth/points"/>
-    <param name="local_costmap/point_cloud_sensor/sensor_frame" value="/$(arg robot_name)/camera_depth_frame"/>
-    <param name="global_costmap/point_cloud_sensor/sensor_frame" value="/$(arg robot_name)/camera_depth_frame"/>
-    <param name="local_costmap/scan/sensor_frame" value="/$(arg robot_name)/camera_depth_frame"/>
-    <param name="global_costmap/scan/sensor_frame" value="/$(arg robot_name)/camera_depth_frame"/>
-    <param name="local_costmap/scan/topic" value="/$(arg robot_name)/scan"/>
-    <param name="global_costmap/scan/topic" value="/$(arg robot_name)/scan"/>
-
-    <param name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
-    <param name="global_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
-    <param name="local_costmap/global_frame" value="$(arg odom_frame_id)"/>
-    <param name="local_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
+    <param unless="$(eval robot_name=='')" name="local_costmap/robot_base_frame" value="$(arg robot_name)/$(arg base_frame_id)"/>
+    <param unless="$(eval robot_name=='')" name="local_costmap/global_frame" value="$(arg robot_name)/$(arg odom_frame_id)"/>
+    <param unless="$(eval robot_name=='')" name="local_costmap/scan/sensor_frame" value="$(arg robot_name)/laser"/>
+    <param unless="$(eval robot_name=='')" name="local_costmap/scan/topic" value="$(arg robot_name)/scan"/>
+    <param unless="$(eval robot_name=='')" name="global_costmap/robot_base_frame" value="$(arg robot_name)/$(arg base_frame_id)"/>
+    <param unless="$(eval robot_name=='')" name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
+    <param unless="$(eval robot_name=='')" name="global_costmap/scan/sensor_frame" value="$(arg robot_name)/$(arg laser_topic)"/>
+    <param unless="$(eval robot_name=='')" name="global_costmap/scan/topic" value="$(arg robot_name)/$(arg laser_topic)"/>
 
     <remap from="cmd_vel" to="$(arg robot_name)/cmd_vel"/>
     <remap from="odom" to="$(arg robot_name)/$(arg odom_topic)"/>
