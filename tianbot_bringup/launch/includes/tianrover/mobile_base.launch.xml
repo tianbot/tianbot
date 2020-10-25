@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="serial_port" />
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+  <arg name="base_frame" default="base_footprint" />
+  <arg name="odom_frame" default="odom" />
+
+  <node pkg="tianrover" type="tianrover_node" name="tianrover" output="screen">
+    <param name="serial_port" type="string" value="$(arg serial_port)"/>
+    <param name="base_frame" type="string" value="$(arg robot_name)/$(arg base_frame)"/>
+    <param name="odom_frame" type="string" value="$(arg robot_name)/$(arg odom_frame)"/>
+    <remap from="tianrover/imu" to="$(arg robot_name)/imu" />
+    <remap from="tianrover/odom" to="$(arg robot_name)/odom" />
+    <remap from="tianrover/ackermann_cmd" to="$(arg robot_name)/ackermann_cmd" />
+    <remap from="tianrover/uwb" to="$(arg robot_name)/uwb" /> 
+  </node>
+</launch>

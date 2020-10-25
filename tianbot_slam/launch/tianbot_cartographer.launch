@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+
 <!-- cartographer slam-->
 <launch>
   <arg name="base" default="$(optenv TIANBOT_BASE tianbot_omni)" doc="mobile base type [tianbot, tianrover, tianbot_omni, tianbot_mini]"/>
@@ -7,8 +9,8 @@
   <param name="/use_sim_time" value="false" />
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
-          -configuration_directory $(find tianbot_slam)/configuration_files/$(arg base)
-          -configuration_basename $(arg base_model)_cartographer.lua"
+          -configuration_directory $(find tianbot_slam)/param
+          -configuration_basename cartographer.lua"
       output="screen">
     <remap from="scan" to="$(arg robot_name)/scan" />
     <remap from="odom" to="$(arg robot_name)/odom" />

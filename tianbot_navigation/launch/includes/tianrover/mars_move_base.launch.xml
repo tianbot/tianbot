@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="odom_frame_id"   default="odom"/>
+  <arg name="base_frame_id"   default="base_link"/>
+  <arg name="global_frame_id" default="map"/>
+  <arg name="odom_topic" default="odom" />
+  <arg name="laser_topic" default="scan" />
+  <arg name="tianbot_base" default="$(optenv TIANBOT_BASE tianbot_omni)" />
+  <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [mars, moon, etc..]"/>
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+
+  <!--  Navigation -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/footprint_$(arg base_model).yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/footprint_$(arg base_model).yaml" command="load" ns="local_costmap" />
+
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/move_base_params.yaml" command="load" />
+    <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/teb_local_planner_params.yaml" command="load" />
+
+    <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+    <param name="planner_frequency" value="1.0" />
+    <param name="planner_patience" value="5.0" />
+        
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <param name="controller_frequency" value="5.0" />
+    <param name="controller_patience" value="15.0" />
+        
+    <param name="clearing_rotation_allowed" value="false" /> <!-- Our carlike robot is not able to rotate in place -->
+
+    <!-- reset frame_id parameters using user input data -->
+    <param unless="$(eval robot_name=='')" name="local_costmap/robot_base_frame" value="$(arg robot_name)/$(arg base_frame_id)"/>
+    <param unless="$(eval robot_name=='')" name="local_costmap/global_frame" value="$(arg robot_name)/$(arg odom_frame_id)"/>
+    <param unless="$(eval robot_name=='')" name="local_costmap/scan/sensor_frame" value="$(arg robot_name)/laser"/>
+    <param unless="$(eval robot_name=='')" name="local_costmap/scan/topic" value="$(arg robot_name)/scan"
+/>
+    <param unless="$(eval robot_name=='')" name="global_costmap/robot_base_frame" value="$(arg robot_name)/$(arg base_frame_id)"/>
+    <param unless="$(eval robot_name=='')" name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
+    <param unless="$(eval robot_name=='')" name="global_costmap/scan/sensor_frame" value="$(arg robot_name)/$(arg laser_topic)"/>
+    <param unless="$(eval robot_name=='')" name="global_costmap/scan/topic" value="$(arg robot_name)/$(arg laser_topic)"/>
+    <remap from="cmd_vel" to="$(arg robot_name)/cmd_vel"/>
+    <remap from="odom" to="$(arg robot_name)/$(arg odom_topic)"/>
+    <remap from="scan" to="$(arg robot_name)/$(arg laser_topic)"/>
+
+  </node>
+
+    <!-- cmd_vel to ackermann_cmd -->
+    <node pkg="tianbot_navigation" type="cmd_vel_to_ackermann_drive.py" name="vel_to_ackermann" >
+      <param name="twist_cmd_topic" value="/cmd_vel" />
+      <param name="ackermann_cmd_topic" value="/ackermann_cmd" />
+      <param if="$(eval base_model=='mars')" name="wheelbase" value="1.4" />
+      <param if="$(eval base_model=='moon')" name="wheelbase" value="0.8" />
+    </node>    
+    
+</launch>

@@ -10,7 +10,7 @@
     <arg name="scan_topic" default="$(arg robot_name)/scan"/>
 
     <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
-        <rosparam file="$(find tianbot_slam)/configuration_files/$(arg base)/$(arg base_model)_hector.yaml" command="load" />
+        <rosparam file="$(find tianbot_slam)/hector.yaml" command="load" />
         <param name="map_frame" value="map" />
         <param name="base_frame" value="$(arg base_frame)" />
         <param name="odom_frame" value="$(arg odom_frame)" />
