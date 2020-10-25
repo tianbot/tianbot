@@ -8,7 +8,7 @@
     <arg name="odom_frame" default="odom" />
 
     <!-- gmapping -->
-    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen" >
         <rosparam file="$(find tianbot_slam)/configuration_files/$(arg base)/$(arg base_model)_gmapping.yaml" command="load" />
         <remap from="scan" to="$(arg robot_name)/scan"/>
 	<param name="odom_frame" value="$(arg robot_name)/$(arg odom_frame)"/>
