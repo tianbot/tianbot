@@ -35,6 +35,9 @@
 *.DS_Store
 *.swp
 
+# office docs
+*.doc
+*.docx
 
 # python compiled
 *.pyc
