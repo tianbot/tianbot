@@ -8,8 +8,11 @@
 
   <node pkg="tianrover" type="tianrover_node" name="tianrover" output="screen">
     <param name="serial_port" type="string" value="$(arg serial_port)"/>
-    <param name="base_frame" type="string" value="$(arg robot_name)/$(arg base_frame)"/>
-    <param name="odom_frame" type="string" value="$(arg robot_name)/$(arg odom_frame)"/>
+    <param unless="$(eval robot_name=='')" name="base_frame" type="string" value="$(arg robot_name)/$(arg base_frame)"/>
+    <param name="base_frame" type="string" value="$(arg base_frame)"/>
+    <param unless="$(eval robot_name=='')" name="odom_frame" type="string" value="$(arg robot_name)/$(arg odom_frame)"/>
+    <param name="odom_frame" type="string" value="$(arg odom_frame)"/>
+
     <remap from="tianrover/imu" to="$(arg robot_name)/imu" />
     <remap from="tianrover/odom" to="$(arg robot_name)/odom" />
     <remap from="tianrover/ackermann_cmd" to="$(arg robot_name)/ackermann_cmd" />
