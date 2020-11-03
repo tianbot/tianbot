@@ -49,6 +49,7 @@
 99.my_tianbot.sh.em
 tianbot_office*.yaml
 tianbot_maps*.yaml
+tianbot_slam/maps
 # unused file
 imgui.ini
 .vscode
