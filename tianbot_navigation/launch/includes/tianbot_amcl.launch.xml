@@ -7,7 +7,7 @@
 
     <node pkg="amcl" type="amcl" name="amcl" output="screen" >
         <!-- Publish scans from best pose at a max of 10 Hz -->
-        <param name="transform_tolerance" value="0.4" />
+        <param name="transform_tolerance" value="0.3" />
         <param name="gui_publish_rate" value="10.0"/>
         <param name="laser_max_beams" value="50"/>
         <param name="min_particles" value="500"/>
@@ -41,9 +41,9 @@
         <param name="first_map_only" value="true"/>
         <param name="tf_broadcast" value="true"/>
 
-        <param name="odom_frame_id" value="/odom"/>
-        <param name="global_frame_id" value="/map"/>
-        <param name="base_frame_id" value="/base_footprint"/>
+        <param name="odom_frame_id" value="odom"/>
+        <param name="global_frame_id" value="map"/>
+        <param name="base_frame_id" value="base_footprint"/>
         <param name="odom_model_type" value="diff"/>
 
         <param name="initial_pose_x" value="$(arg init_x)"/>
