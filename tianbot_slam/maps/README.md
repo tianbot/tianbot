@@ -1,1 +1,2 @@
-maps will not be removed when git pull to update this repo
+Modifications are not tracked in this folder.
+Maps only kept locally.

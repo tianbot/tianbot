@@ -1,7 +1,7 @@
 # Set some defaults to tianbot launch environment
 
 : ${TIANBOT_BASE:=tianbot_omni}  #tianbot_omni, tianrover, tianbot_mini.
-: ${TIANBOT_BASE_MODEL:=06q1}  #06q1, 06q2, 08q1, 08q2, 08q8, etc
+: ${TIANBOT_BASE_MODEL:=06q1}  #06q1, 08q1, 08q2, 08q8, etc
 : ${TIANBOT_BASE_PORT:=/dev/tianbot_base}  # /dev/ttyUSB1
 : ${TIANBOT_RGBD_CAMERA:=none} #realsense_d415, realsense_d435, astra, astra_pro, xtion, none 
 : ${TIANBOT_VIDEO_DEVICE:=none} # /dev/video0 for most of the usb_cams.If you want init usb_cam in jet_cam, this should be set to none.
