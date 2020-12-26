@@ -58,7 +58,7 @@ void *Serial::serial_recv(void *p)
     uint8_t recvbuff[1024];
     int recvlen = 0;
     Serial *pThis = (Serial *)p;
-    usleep(10000);
+    usleep(100000);
     while (pThis->running_)
     {
         memset(recvbuff, 0, sizeof(recvbuff));
