@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     nh.param<std::string>("type", type, DEFAULT_TYPE);
 
-    if (type == "mecanum")
+    if (type == "omni")
     {
         core = new TianbotOmni(&nh);
     }
