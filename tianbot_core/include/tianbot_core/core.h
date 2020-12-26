@@ -10,7 +10,7 @@
 
 #define DEFAULT_SERIAL_DEVICE "/dev/ttyUSB0"
 #define DEFAULT_SERIAL_BAUDRATE 460800
-#define DEFAULT_TYPE "mecanum"
+#define DEFAULT_TYPE "omni"
 
 using namespace std;
 using namespace boost;
