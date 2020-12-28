@@ -7,7 +7,9 @@
     <arg name="lidar" value="$(arg lidar)" />
   </include>
 
-  <include if="$(eval lidar=='osight_lidar')" file="$(find tianbot_bringup)/launch/includes/lidar/osight_lidar.launch.xml" />
+  <include if="$(eval 'osight_lidar' in lidar)" file="$(find tianbot_bringup)/launch/includes/lidar/osight_lidar.launch.xml" />
+
+  <include if="$(eval 'lslidar' in lidar)" file="$(find tianbot_bringup)/launch/includes/lidar/lslidar.launch.xml" />
 
   <include if="$(eval lidar=='velodyne_vlp16')" file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
 </launch>
