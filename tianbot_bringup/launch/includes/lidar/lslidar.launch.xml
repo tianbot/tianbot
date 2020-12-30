@@ -4,28 +4,41 @@
   <arg name="lidar" default="$(optenv TIANRACER_LIDAR)" />
   <arg name="model" default="$(optenv TIANRACER_LIDAR_MODEL c16)" />
   <arg name="lidar_ip" default="$(optenv TIANRACER_LIDAR_IP 192.168.1.200)" />
+  <arg name="msop_port" default="2368" />
+  <arg name="difop_port" default="2369" />
+  <arg name="return_mode" default="1" />
+  <arg name="time_synchronization" default="true" />
 
   <node pkg="lslidar_c16_driver" type="lslidar_c16_driver_node" name="lslidar_c16_driver_node" output="screen">
     <param name="lidar_ip" value="$(arg lidar_ip)"/>
     <param name="device_port" value="2368"/>
-        <param name="add_multicast" value="false"/>
-        <param name="group_ip" value="224.1.1.2"/>
+    <param name="msop_port" value="$(arg msop_port)" />
+    <param name="difop_port" value="$(arg difop_port)"/>
+    <param name="frame_id" value="laser"/>
+    <param name="add_multicast" value="false"/>
+    <param name="group_ip" value="224.1.1.2"/>
+    <param name="rpm" value="600"/>
+    <param name="return_mode" value="$(arg return_mode)"/>
+    <param name="time_synchronization" value="$(arg time_synchronization)"/>
   </node>
 
-  <node pkg="lslidar_c16_decoder" type="lslidar_c16_decoder_node" name="lslidar_c16_decoder_node" output="screen">
-    <param name="frame_id" value="laser"/>
-    <param name="point_num" value="2000"/>
-    <param name="channel_num" value="8"/>
-    <param name="angle_disable_min" value="0"/>
-    <param name="angle_disable_max" value="0"/>
-    <param name="angle3_disable_min" value="0"/>
-    <param name="angle3_disable_max" value="0"/>
+  <node pkg="lslidar_c16_decoder" type="lslidar_c16_decoder_node" name="lslidar_c16_decoder_node" >
+    <param name="calibration_file" value="$(find lslidar_c16_decoder)/params/lslidar_c16_db.yaml" />
+    <param name="scan_frame_id" value="laser"/>
     <param name="min_range" value="0.15"/>
     <param name="max_range" value="150.0"/>
-    <param name="frequency" value="10.0"/>
-    <param name="publish_point_cloud" value="true"/>
+    <param name="cbMethod" value="true"/>
+    <param name="config_vert" value="true"/>
+    <param name="print_vert" value="false"/>
+    <param name="return_mode" value="$(arg return_mode)"/>
+    <param name="degree_mode" value="2"/>
+    <param name="config_vert_file" value="false"/>
+    <param name="distance_unit" value="0.25"/>
+    <param name="time_synchronization" value="$(arg time_synchronization)"/>
+    <param name="scan_start_angle" value="0.0"/>
+    <param name="scan_end_angle" value="36000.0"/>
+    <param name="scan_num" value="8"/>
     <param name="publish_scan" value="true"/>
-    <param name="use_gps_ts" value="false"/>
   </node>
 
 
