@@ -61,7 +61,7 @@ roslaunch tianbot_bringup gps.launch
 ```
 
 ## 建图
-After bringing up the Tianbot, we provide three methods to perform slam for 2D laser.
+启动Tianbot后, 我们提供三种方式进行二维建图.
 
 ### GMapping
 ```
