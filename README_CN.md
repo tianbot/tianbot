@@ -31,7 +31,7 @@ cd ~/catkin_ws && catkin_make
 ```
 
 ## 通信
-Tianbot can be brought up all at once, or separately.
+Tianbot可以一次全部启动,或者单独启动各个部件.
 ```
 roslaunch tianbot_bringup tianbot_bringup.launch
 ```
