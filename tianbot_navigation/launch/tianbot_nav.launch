@@ -42,7 +42,7 @@
     </include>
 
     <!--  Navigation -->
-    <include file="$(find tianbot_navigation)/launch/includes/$(arg tianbot_base)/$(arg base_model)_move_base.launch.xml" />
+    <include file="$(find tianbot_navigation)/launch/includes/$(arg tianbot_base)_move_base.launch.xml" />
 
     <!--  Visualisation -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tianbot_rviz)/rviz_cfg/teb_navigation.rviz" if="$(arg use_rviz)" />

@@ -1,0 +1,3 @@
+# footprint should be include in another file so can be include according to the base model
+# 08q1 and 08q2 are of the same size
+footprint: [[0.3, 0.225], [0.3, -0.225], [-0.3, -0.225], [-0.3, 0.225]]
