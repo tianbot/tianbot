@@ -34,6 +34,7 @@
 # Something else
 *.DS_Store
 *.swp
+*.log
 
 # office docs
 *.doc

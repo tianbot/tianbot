@@ -7,7 +7,7 @@
   <arg name="msop_port" default="2368" />
   <arg name="difop_port" default="2369" />
   <arg name="return_mode" default="1" />
-  <arg name="time_synchronization" default="true" />
+  <arg name="time_synchronization" default="false" />
 
   <node pkg="lslidar_c16_driver" type="lslidar_c16_driver_node" name="lslidar_c16_driver_node" output="screen">
     <param name="lidar_ip" value="$(arg lidar_ip)"/>
