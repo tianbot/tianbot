@@ -35,8 +35,8 @@
     <param name="config_vert_file" value="false"/>
     <param name="distance_unit" value="0.25"/>
     <param name="time_synchronization" value="$(arg time_synchronization)"/>
-    <param name="scan_start_angle" value="0.0"/>
-    <param name="scan_end_angle" value="36000.0"/>
+    <param name="scan_start_angle" value="4500.0"/>
+    <param name="scan_end_angle" value="31500.0"/>
     <param name="scan_num" value="8"/>
     <param name="publish_scan" value="true"/>
   </node>
