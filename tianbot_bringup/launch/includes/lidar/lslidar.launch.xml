@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <launch>
-  <arg name="lidar" default="$(optenv TIANRACER_LIDAR)" />
-  <arg name="model" default="$(optenv TIANRACER_LIDAR_MODEL c16)" />
-  <arg name="lidar_ip" default="$(optenv TIANRACER_LIDAR_IP 192.168.1.200)" />
+  <arg name="lidar" default="$(optenv TIANBOT_LIDAR)" />
+  <arg name="model" default="$(optenv TIANBOT_LIDAR_MODEL c16)" />
+  <arg name="lidar_ip" default="$(optenv TIANBOT_LIDAR_IP 192.168.1.200)" />
   <arg name="msop_port" default="2368" />
   <arg name="difop_port" default="2369" />
   <arg name="return_mode" default="1" />
@@ -39,6 +39,7 @@
     <param name="scan_end_angle" value="31500.0"/>
     <param name="scan_num" value="8"/>
     <param name="publish_scan" value="true"/>
+    <remap from="lslidar_point_cloud" to="lidar_points"/>
   </node>
 
 
