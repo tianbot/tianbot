@@ -8,7 +8,7 @@ footprint_padding: 0.01
 
 obstacle_layer: 
   enabled: true
-  observation_sources: scan
+  observation_sources: scan depth_points lidar_points
   origin_z:             0.0
   z_resolution:         0.2
   z_voxels:             8
@@ -30,15 +30,16 @@ obstacle_layer:
     #    max_obstacle_height: 0.55
   depth_points:
     data_type: PointCloud2
-    topic: /camera/depth_registered/points
+    topic: camera/depth_registered/points
     marking: ture
     clearing: ture
+    min_obstacle_height: 0.2
+    expected_update_rate: 2
   lidar_points:
-    depth_points:
-      data_type: PointCloud2
-      topic: /lidar_points
-      marking: ture
-      clearing: ture
+    data_type: PointCloud2
+    topic: lidar_points
+    marking: ture
+    clearing: ture
 
   # for debugging only, let's you see the entire voxel grid
 
