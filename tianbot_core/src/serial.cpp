@@ -211,7 +211,7 @@ bool Serial::open(const char *device, int rate, int flow_ctrl, int databits,
     int ret;
     pthread_attr_t attr;
     recv_thread_ = 0;
-    DBG_LOG_TRACE("open serial %s ...", device);
+
     //句柄检查
     if (NULL == device || NULL == cb)
     {
@@ -225,7 +225,6 @@ bool Serial::open(const char *device, int rate, int flow_ctrl, int databits,
     fd_ = ::open(device, O_RDWR);
     if (fd_ < 0)
     {
-        DBG_LOG_ERROR("serial %s open failed", device);
         return false;
     }
 
@@ -253,7 +252,6 @@ bool Serial::open(const char *device, int rate, int flow_ctrl, int databits,
         goto error;
     }
 
-    DBG_LOG_TRACE("open serial %s successfully", device);
     return true;
 
 error:

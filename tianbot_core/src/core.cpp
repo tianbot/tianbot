@@ -155,13 +155,16 @@ TianbotCore::TianbotCore(ros::NodeHandle *nh) : nh_(*nh)
     debug_pub_ = nh_.advertise<std_msgs::String>("debug_result", 1);
     debug_sub_ = nh_.subscribe("debug_cmd", 1, &TianbotCore::debugcmdCallback, this);
     heartbeat_timer_ = nh_.createTimer(ros::Duration(0.2), &TianbotCore::heartCallback, this);
-    heartbeat_timer_.start();
     communication_timer_ = nh_.createTimer(ros::Duration(0.2), &TianbotCore::communicationErrorCallback, this);
-    communication_timer_.start();
-
-    if (serial_.open(param_serial_port.c_str(), param_serial_baudrate, 0, 8, 1, 'N',
+    heartbeat_timer_.stop();
+    communication_timer_.stop();
+    while (serial_.open(param_serial_port.c_str(), param_serial_baudrate, 0, 8, 1, 'N',
                      boost::bind(&TianbotCore::serialDataProc, this, _1, _2)) != true)
     {
-        exit(-1);
+        ROS_ERROR_THROTTLE(5.0, "Device %s open failed", param_serial_port.c_str());
+        ros::Duration(0.5).sleep();
     }
+    ROS_INFO("Device %s open successfully", param_serial_port.c_str());
+    heartbeat_timer_.start();
+    communication_timer_.start();
 }
