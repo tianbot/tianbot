@@ -57,15 +57,22 @@ void *Serial::serial_recv(void *p)
 {
     uint8_t recvbuff[1024];
     int recvlen = 0;
+    fd_set rfds;
+
     Serial *pThis = (Serial *)p;
     usleep(100000);
+
+    FD_ZERO(&rfds);
+    FD_SET(pThis->fd_, &rfds);
+
     while (pThis->running_)
     {
         memset(recvbuff, 0, sizeof(recvbuff));
+        select(pThis->fd_ + 1, &rfds, NULL, NULL, NULL);
 
-        if ((recvlen = read(pThis->fd_, recvbuff, sizeof(recvbuff))) == -1)
+        recvlen = read(pThis->fd_, recvbuff, sizeof(recvbuff));
+        if (recvlen <= 0)
         {
-            DBG_LOG_ERROR("uart_recv error: %d", errno);
             continue;
         }
         pThis->recv_cb_(recvbuff, recvlen);
@@ -222,7 +229,7 @@ bool Serial::open(const char *device, int rate, int flow_ctrl, int databits,
     recv_cb_ = cb;
 
     //打开设备
-    fd_ = ::open(device, O_RDWR);
+    fd_ = ::open(device, O_RDWR | O_NOCTTY);
     if (fd_ < 0)
     {
         return false;
@@ -269,7 +276,6 @@ error:
 
 int Serial::send(uint8_t *data, int len)
 {
-    int ret = 0;
     int sended_len = 0;
 
     if (fd_ <= 0)
@@ -284,13 +290,13 @@ int Serial::send(uint8_t *data, int len)
         retlen = write(fd_, data + sended_len, len - sended_len);
         if (retlen < 0)
         {
-            DBG_LOG_ERROR("serial send failed! ret = %d", ret);
+            close();
             return -1;
         }
         sended_len += retlen;
     }
 
-    return ret;
+    return 0;
 }
 
 void Serial::close(void)
