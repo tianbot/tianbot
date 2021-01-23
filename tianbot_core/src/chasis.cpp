@@ -84,7 +84,9 @@ void TianbotChasis::tianbotDataProc(unsigned char *buf, int len)
             std_msgs::String debug_msg;
             p->data[p->len-2] = '\0';
             debug_msg.data = (char *)(p->data);
-            debug_pub_.publish(debug_msg);
+            debugResultStr_ = (char *)(p->data);
+            debugResultFlag_ = true;
+            debug_result_pub_.publish(debug_msg);
         }
         break;
 

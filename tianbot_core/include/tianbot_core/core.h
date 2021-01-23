@@ -7,6 +7,7 @@
 #include "boost/function.hpp"
 #include "string.h"
 #include "std_msgs/String.h"
+#include "tianbot_core/DebugCmd.h"
 
 #define DEFAULT_SERIAL_DEVICE "/dev/ttyUSB0"
 #define DEFAULT_SERIAL_BAUDRATE 460800
@@ -20,10 +21,13 @@ class TianbotCore
 public:
     Serial serial_;
     string type;
-    ros::Publisher debug_pub_;
-    ros::Subscriber debug_sub_;
+    ros::Publisher debug_result_pub_;
+    ros::Subscriber debug_cmd_sub_;
     ros::NodeHandle nh_;
     ros::Timer heartbeat_timer_;
+
+    bool debugResultFlag_;
+    string debugResultStr_;
 
     TianbotCore(ros::NodeHandle *nh);
 
@@ -36,7 +40,9 @@ private:
     void serialDataProc(uint8_t *data, unsigned int data_len);
     void heartCallback(const ros::TimerEvent &);
     void communicationErrorCallback(const ros::TimerEvent &);
-    void debugcmdCallback(const std_msgs::String::ConstPtr &msg);
+    void debugCmdCallback(const std_msgs::String::ConstPtr &msg);
+    bool debugCmdSrv(tianbot_core::DebugCmd::Request &req,  tianbot_core::DebugCmd::Response &res);
+    ros::ServiceServer param_set_;
 };
 
 #endif

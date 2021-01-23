@@ -156,11 +156,38 @@ void TianbotCore::heartCallback(const ros::TimerEvent &)
     }
 }
 
-void TianbotCore::debugcmdCallback(const std_msgs::String::ConstPtr &msg)
+void TianbotCore::debugCmdCallback(const std_msgs::String::ConstPtr &msg)
 {
     vector<uint8_t> buf;
     buildCmd(buf, PACK_TYPE_DEBUG, (uint8_t *)msg->data.c_str(), msg->data.length());
     serial_.send(&buf[0], buf.size());
+}
+
+bool TianbotCore::debugCmdSrv(tianbot_core::DebugCmd::Request &req, tianbot_core::DebugCmd::Response &res)
+{
+    vector<uint8_t> buf;
+    debugResultFlag_ = false;
+    uint32_t count = 100;
+    buildCmd(buf, PACK_TYPE_DEBUG, (uint8_t *)req.cmd.c_str(), req.cmd.length());
+    serial_.send(&buf[0], buf.size());
+    if(req.cmd == "reset")
+    {
+        res.result = "reset";
+        return true;
+    }
+    while (count-- && !debugResultFlag_)
+    {
+        ros::Duration(0.001).sleep();
+    }
+    if(debugResultFlag_)
+    {
+        res.result = debugResultStr_;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 TianbotCore::TianbotCore(ros::NodeHandle *nh) : nh_(*nh)
@@ -169,8 +196,9 @@ TianbotCore::TianbotCore(ros::NodeHandle *nh) : nh_(*nh)
     int32_t param_serial_baudrate;
     nh_.param<std::string>("serial_port", param_serial_port, DEFAULT_SERIAL_DEVICE);
     nh_.param<int>("serial_baudrate", param_serial_baudrate, DEFAULT_SERIAL_BAUDRATE);
-    debug_pub_ = nh_.advertise<std_msgs::String>("debug_result", 1);
-    debug_sub_ = nh_.subscribe("debug_cmd", 1, &TianbotCore::debugcmdCallback, this);
+    debug_result_pub_ = nh_.advertise<std_msgs::String>("debug_result", 1);
+    debug_cmd_sub_ = nh_.subscribe("debug_cmd", 1, &TianbotCore::debugCmdCallback, this);
+    param_set_ = nh_.advertiseService<tianbot_core::DebugCmd::Request, tianbot_core::DebugCmd::Response>("debug_cmd_srv", boost::bind(&TianbotCore::debugCmdSrv, this, _1, _2));
     heartbeat_timer_ = nh_.createTimer(ros::Duration(0.2), &TianbotCore::heartCallback, this);
     communication_timer_ = nh_.createTimer(ros::Duration(0.2), &TianbotCore::communicationErrorCallback, this);
     heartbeat_timer_.stop();
