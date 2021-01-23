@@ -167,13 +167,17 @@ bool TianbotCore::debugCmdSrv(tianbot_core::DebugCmd::Request &req, tianbot_core
 {
     vector<uint8_t> buf;
     debugResultFlag_ = false;
-    uint32_t count = 100;
+    uint32_t count = 200;
     buildCmd(buf, PACK_TYPE_DEBUG, (uint8_t *)req.cmd.c_str(), req.cmd.length());
     serial_.send(&buf[0], buf.size());
     if(req.cmd == "reset")
     {
         res.result = "reset";
         return true;
+    }
+    else if(req.cmd == "param save")
+    {
+        count = 2000;
     }
     while (count-- && !debugResultFlag_)
     {
