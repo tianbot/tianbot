@@ -7,36 +7,51 @@ from tianbot_core.srv import *
 
 def param_set_client(param):
     rospy.wait_for_service('/tianbot_core/debug_cmd_srv')
+    count = 3
     while(1):
         try:
             debug_cmd = rospy.ServiceProxy('/tianbot_core/debug_cmd_srv', DebugCmd)
             resp = debug_cmd("param set " + param)
             return resp.result
         except rospy.ServiceException as e:
-            print("Service call failed: %s"%e)
-            print("retry ...")
+            count = count - 1
+            if(count == 0):
+                print("Service call failed: %s"%e)
+                sys.exit(1)
+            else:
+                printf("retry ...")
 
 def param_get_client():
     rospy.wait_for_service('/tianbot_core/debug_cmd_srv')
+    count = 3
     while(1):
         try:
             debug_cmd = rospy.ServiceProxy('/tianbot_core/debug_cmd_srv', DebugCmd)
             resp = debug_cmd("param get")
             return resp.result
         except rospy.ServiceException as e:
-            print("Service call failed: %s"%e)
-            print("retry ...")
+            count = count - 1
+            if(count == 0):
+                print("Service call failed: %s"%e)
+                sys.exit(1)
+            else:
+                printf("retry ...")
 
 def param_save_client():
     rospy.wait_for_service('/tianbot_core/debug_cmd_srv')
+    count = 3
     while(1):
         try:
             debug_cmd = rospy.ServiceProxy('/tianbot_core/debug_cmd_srv', DebugCmd)
             resp = debug_cmd("param save")
             return resp.result
         except rospy.ServiceException as e:
-            print("Service call failed: %s"%e)
-            print("retry ...")
+            count = count - 1
+            if(count == 0):
+                print("Service call failed: %s"%e)
+                sys.exit(1)
+            else:
+                printf("retry ...")
 
 def reset_client():
     rospy.wait_for_service('/tianbot_core/debug_cmd_srv')
