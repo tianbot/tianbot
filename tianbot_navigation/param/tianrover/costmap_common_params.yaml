@@ -4,7 +4,6 @@ max_obstacle_height: 1.80  # assume something like an arm is mounted on top of t
 # footprint included in another file so can be include according to the base model
 
 transform_tolerance: 0.2
-map_type: costmap
 
 obstacle_layer:
  enabled: true
