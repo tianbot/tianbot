@@ -4,3 +4,14 @@ scan_filter_chain:
   params:
     lower_angle: -0.5236 # in radian, -30 degree
     upper_angle: 0.5236  # in radian, 30 degree
+
+# - name: box
+#   type: laser_filters/LaserScanBoxFilter
+#   params:
+#     box_frame: base_link
+#     min_x: -0.6
+#     max_x: 0.6
+#     min_y: -0.5
+#     max_y: 0.5
+#     min_z: -0.0
+#     max_z: 0.6

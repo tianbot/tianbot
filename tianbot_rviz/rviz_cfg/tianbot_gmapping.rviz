@@ -220,7 +220,7 @@ Visualization Manager:
         Shaft Length: 0.20000000298023224
         Shaft Radius: 0.05000000074505806
         Value: Arrow
-      Topic: /tianracer/odom
+      Topic: /tianbot/odom
       Unreliable: false
       Value: true
   Enabled: true
