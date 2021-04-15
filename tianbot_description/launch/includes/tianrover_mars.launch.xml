@@ -8,5 +8,5 @@
     <node if="$(eval 'osight' in lidar)" pkg="tf" type="static_transform_publisher" name="base_link2laser" args="0 0 0.1 0 0 0 base_link laser 20"/>
     <node if="$(eval 'rslidar' in lidar)" pkg="tf" type="static_transform_publisher" name="base_link2laser" args="0.3 0 1.5 0 0 0 base_link laser 20"/>
     <node pkg="tf" type="static_transform_publisher" name="base_link2imu" args="0.22 0 0.1 0 0 0 base_link imu_link 20"/>
-    <node pkg="tf" type="static_transform_publisher" name="base_link2camera" args="0.15 0 0.1 -1.57 0 -1.57 base_link camera_link 20"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link2camera" args="0.15 0 1.4 0 0 0 base_link camera_link 20"/>
 </launch>
