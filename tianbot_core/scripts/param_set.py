@@ -1,9 +1,8 @@
-# from __future__ import print_function
-
+#!/usr/bin/env python
 import sys
 import rospy
 import time
-from tianbot_core.srv import *
+from tianbot_core.srv import DebugCmd
 
 def param_set_client(param):
     rospy.wait_for_service('/tianbot_core/debug_cmd_srv')
