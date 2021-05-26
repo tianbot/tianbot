@@ -1,0 +1,3 @@
+[submodule "tianbot_core"]
+	path = tianbot_core
+	url = https://github.com/tianbot/tianbot_core.git
