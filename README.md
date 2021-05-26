@@ -25,7 +25,7 @@ Customized
 
 ```
 cd ~/catkin_ws/src/
-git clone https://github.com/tianbot/tianbot.git
+git clone https://github.com/tianbot/tianbot.git --recurse-submodules
 cd ~/catkin_ws && catkin_make
 ```
 
