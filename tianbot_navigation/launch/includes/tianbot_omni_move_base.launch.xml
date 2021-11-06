@@ -12,6 +12,7 @@
   <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [06q1, 08q1, 08q2, 08q8, etc..]"/>
   <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
   <arg name="local_planner" default="$(optenv TIANBOT_LOCAL_PLANNER base)" doc="base, dwa, eband, teb" />
+  <arg name="obs_sources" default="$(optenv TIANBOT_OBS_SOURCES scan)" doc="scan, depth_scan, depth_points, lidar_points" />
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <!-- local planner -->
@@ -40,6 +41,9 @@
     <param unless="$(eval robot_name=='')" name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
     <param unless="$(eval robot_name=='')" name="global_costmap/scan/sensor_frame" value="$(arg robot_name)/$(arg laser_frame_id)"/>
     <param unless="$(eval robot_name=='')" name="global_costmap/scan/topic" value="$(arg robot_name)/$(arg laser_topic)"/>
+    <!-- obstacle layer observation sources -->
+    <param name="local_costmap/obstacle_layer/observation_sources" value="$(arg obs_sources)" />
+    <param name="global_costmap/obstacle_layer/observation_sources" value="$(arg obs_sources)" />
 
     <remap from="cmd_vel" to="$(arg robot_name)/cmd_vel"/>
     <remap from="odom" to="$(arg robot_name)/$(arg odom_topic)"/>

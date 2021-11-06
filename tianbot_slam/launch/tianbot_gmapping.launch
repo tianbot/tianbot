@@ -6,13 +6,17 @@
     <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
     <arg name="base_frame" default="base_footprint" />
     <arg name="odom_frame" default="odom" />
+    <arg name="mapping_maxRange" default="$(optenv TIANBOT_MAX_RANGE)" doc="if not set, this value will be calculated using first laserscan"/>
+    <arg name="mapping_maxUrange" default="$(optenv TIANBOT_MAX_URANGE)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
 
     <!-- gmapping -->
     <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen" >
         <rosparam file="$(find tianbot_slam)/param/gmapping.yaml" command="load" />
+        <param unless="$(eval mapping_maxUrange=='')" name="maxUrange" value="$(arg mapping_maxUrange)"/>
+        <param unless="$(eval mapping_maxRange=='')" name="maxRange" value="$(arg mapping_maxRange)"/>
         <remap from="scan" to="$(arg robot_name)/scan"/>
-	<param name="odom_frame" value="$(arg robot_name)/$(arg odom_frame)"/>
-	<param name="base_frame" value="$(arg robot_name)/$(arg base_frame)"/>
+	    <param name="odom_frame" value="$(arg robot_name)/$(arg odom_frame)"/>
+	    <param name="base_frame" value="$(arg robot_name)/$(arg base_frame)"/>
     </node>
 
 </launch>

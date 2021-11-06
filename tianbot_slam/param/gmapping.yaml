@@ -1,8 +1,8 @@
 throttle_scans: 1
 map_update_interval: 1.0
 #Increase maxRange and maxUrange may cause problems in gmapping
-maxRange: 8.0
-maxUrange: 5.0 
+# maxRange: 25
+# maxUrange: 20 
 sigma: 0.01 
 kernelSize: 1 
 lstep: 0.05 

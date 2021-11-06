@@ -13,5 +13,5 @@
   
   <include if="$(eval 'rslidar' in lidar)" file="$(find tianbot_bringup)/launch/includes/lidar/rslidar.launch.xml" />
   
-  <include if="$(eval lidar=='velodyne_vlp16')" file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
+  <include if="$(eval 'velodyne' in lidar)" file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
 </launch>
