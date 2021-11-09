@@ -13,9 +13,9 @@
         <param name="lidar_ip" type="string" value="$(arg lidar_ip)"/>
         <param name="frame_id" type="string" value="$(arg frame_id)"/>
         <!-- param name="angle_max"  value="2.3562"/ -->
-        <param name="angle_max"  value="2.3562"/>
+        <param name="angle_max"  value="2.34"/>
         <!-- param name="angle_min"  value="-2.3562"/ -->
-        <param name="angle_min"  value="-2.3562"/>
+        <param name="angle_min"  value="-2.34"/>
         <param name="range_max"  value="20"/>
         <param name="range_min"  value="0.0"/>
         <remap from="$(arg lidar_name)/scan" to="$(arg robot_name)/scan" />
