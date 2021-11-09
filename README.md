@@ -1,9 +1,11 @@
 [中文版说明](https://github.com/tianbot/tianbot/blob/master/README_CN.md)  
 
-[Tianbot详细中文操作手册](http://doc.tianbot.com/tianbot_omni)  
+[Tianbot详细中文操作手册](http://doc.tianbot.com/tianbot)  
 
 # Tianbot
-Tianbot is a series of robots developed based on DJI RoboMaster board, motor and contoller. The typical design is a mecanum-wheeled robot with omni-directional movement. Moreover, differetial drive and ackermann steering geometry like a mars-rover are also supported.   
+Tianbot is a series of robots developed based on DJI RoboMaster boards, motors and contollers. The typical design is a mecanum-wheeled robot with omni-directional movement. Moreover, differetial drive and ackermann steering geometry like a mars-rover are also supported. This is a mapping to navigation software framework supporting all kinds of Tianbot robots. It can be easily deployed to your own robot.  
+
+As long as you can apply the framework to your own robot, it is can be easily to form a group of robots and to do some fancy multi-robot experiment. The framework supports multi-robots very well. 
 
 ## Introduction
 [Tianbot ROS Wiki](https://wiki.ros.org/tianbot)

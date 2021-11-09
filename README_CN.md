@@ -1,10 +1,11 @@
 [English](https://github.com/tianbot/tianbot/blob/master/README.md)  
 
-[Tianbot详细中文操作手册](http://doc.tianbot.com/tianbot_omni)  
+[Tianbot详细中文操作手册](http://doc.tianbot.com/tianbot)  
 
 # Tianbot
-Tianbot全系列机器人。包括Tianbot Omni全向系列，四个轮子采用麦克纳姆轮对称布置、独立驱动。也支持Tianrover六轮阿克曼结构火星车底盘。也支持Tianbot差速机器人系列。
-全系列机器人主要采用DJI机甲大师系列控制器、电机及其驱动器等，性能强劲，品质保证，对标Maxon电机，成本更低。
+天之博特开发的Tianbot全系列机器人开发平台，适用于移动机器人研究，教育，产品原型搭建等。现在的系列产品包括Tianbot Omni全向系列，四个轮子采用麦克纳姆轮对称布置、独立驱动。也支持Tianrover六轮阿克曼结构火星车底盘以及Tianbot差速机器人系列。
+全系列机器人主要采用DJI机甲大师系列控制器、电机及其驱动器等，性能强劲，品质保证，动力性能对标Maxon电机，成本仅不到五分之一。
+这一套建图导航的软件框架是天之博特为自由ROS移动机器人设计的，但是可以比较简单的部署在用户的机器人上。单一的机器人部署完成后，可以轻松的设置多机模式，开始进行机器人集群控制，多机协作的研究。
 
 ## 介绍
 [Tianbot ROS Wiki](https://wiki.ros.org/tianbot)
