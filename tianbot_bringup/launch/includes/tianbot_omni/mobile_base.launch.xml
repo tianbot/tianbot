@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
 <launch>
-  <arg name="serial_port" default="/dev/ttyUSB0"/>
-  <arg name="serial_baudrate" default="115200"/>
-  <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+  <arg name="serial_port" />
+  <arg name="serial_baudrate" />
+  <arg name="robot_name" />
   <arg name="base_frame" default="base_footprint" />
-  <arg name="odom_frame" default="odom" />
+  <arg name="odom_frame" default="odom"/>
 
-  <node pkg="tianbot_core" type="tianbot_core" name="tianbot_omni" output="screen">
+  <node pkg="tianbot_core" type="tianbot_core" name="core" output="screen">
     <param name="serial_port" type="string" value="$(arg serial_port)"/>
     <param name="serial_baudrate" type="int" value="$(arg serial_baudrate)"/>
     <param unless="$(eval robot_name=='')" name="base_frame" type="string" value="$(arg robot_name)/$(arg base_frame)"/>
@@ -15,9 +15,9 @@
     <param unless="$(eval robot_name=='')" name="odom_frame" type="string" value="$(arg robot_name)/$(arg odom_frame)"/>
     <param name="odom_frame" type="string" value="$(arg odom_frame)"/>
 
-    <remap from="tianbot_omni/imu" to="$(arg robot_name)/imu" />
-    <remap from="tianbot_omni/odom" to="$(arg robot_name)/odom" />
-    <remap from="tianbot_omni/cmd_vel" to="$(arg robot_name)/cmd_vel" />
-    <remap from="tianbot_omni/uwb" to="$(arg robot_name)/uwb" /> 
+    <remap from="tianbot_omni/imu" to="imu" />
+    <remap from="tianbot_omni/odom" to="odom" />
+    <remap from="tianbot_omni/cmd_vel" to="cmd_vel" />
+    <remap from="tianbot_omni/uwb" to="uwb" /> 
   </node>
 </launch>

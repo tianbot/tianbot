@@ -50,12 +50,12 @@
 
   </node>
 
-    <!-- cmd_vel to ackermann_cmd. wheelbase is distance from fromt wheel to middle wheel for tianrover -->
-    <node pkg="tianbot_navigation" type="cmd_vel_to_ackermann_drive.py" name="vel_to_ackermann" >
-      <param name="twist_cmd_topic" value="/cmd_vel" />
-      <param name="ackermann_cmd_topic" value="/ackermann_cmd" />
-      <param if="$(eval base_model=='mars')" name="wheelbase" value="0.56" />
-      <param if="$(eval base_model=='moon')" name="wheelbase" value="0.32" />
-    </node>    
+  <!-- cmd_vel to ackermann_cmd. wheelbase is distance from fromt wheel to middle wheel for tianrover -->
+  <node pkg="tianbot_navigation" type="cmd_vel_to_ackermann_drive.py" name="vel_to_ackermann" >
+    <param name="twist_cmd_topic" value="/cmd_vel" />
+    <param name="ackermann_cmd_topic" value="/ackermann_cmd" />
+    <param if="$(eval base_model=='mars')" name="wheelbase" value="0.56" />
+    <param if="$(eval base_model=='moon')" name="wheelbase" value="0.32" />
+  </node>    
     
 </launch>
