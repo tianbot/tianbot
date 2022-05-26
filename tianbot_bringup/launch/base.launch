@@ -5,12 +5,11 @@
   <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
   <arg name="serial_port" default="$(optenv TIANBOT_BASE_PORT /dev/ttyUSB0)" />
   <arg name="serial_baudrate" default="$(optenv TIANBOT_BASE_BAUDRATE 115200)" />
-  <group ns="$(arg robot_name)">
-    <include file="$(find tianbot_bringup)/launch/includes/$(arg base)/mobile_base.launch.xml" >
-      <arg name="serial_port" value="$(arg serial_port)"/>
-      <arg name="serial_baudrate" value="$(arg serial_baudrate)"/>
-      <arg name="robot_name" value="$(arg robot_name)"/>
-    </include>    
-  </group>
+
+  <include file="$(find tianbot_bringup)/launch/includes/$(arg base)/mobile_base.launch.xml" >
+    <arg name="serial_port" value="$(arg serial_port)"/>
+    <arg name="serial_baudrate" value="$(arg serial_baudrate)"/>
+    <arg name="robot_name" value="$(arg robot_name)"/>
+  </include>
 
 </launch>
