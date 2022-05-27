@@ -13,7 +13,8 @@ erwise use the fixed packets number mode."/>
 
   <group ns="$(arg robot_name)">
     <node  name="rslidar_node" pkg="rslidar_driver" type="rslidar_node" output="screen" >
-      <param name="frame_id" value="$(arg robot_name)/laser" />
+      <param name="frame_id" value="laser" />
+      <param unless="$(eval robot_name=='/')" name="frame_id" type="string" value="$(arg robot_name)/laser"/>
       <param name="model" value="$(arg model)"/>
       <param name="device_ip" value="$(arg device_ip)" />
       <param name="msop_port" value="$(arg msop_port)" />
@@ -60,7 +61,8 @@ erwise use the fixed packets number mode."/>
         # 2->inf : Parallelism level
         concurrency_level: 1
       </rosparam>
-      <param name="target_frame" value="$(arg robot_name)/laser" />
+      <param name="target_frame" value="laser" />
+      <param unless="$(eval robot_name=='/')" name="target_frame" type="string" value="$(arg robot_name)/laser"/>
     </node>
   </group> 
 </launch>

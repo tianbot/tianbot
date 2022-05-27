@@ -12,7 +12,8 @@
             <param name="lidar_model" type="string" value="$(arg lidar_model)"/>
             <param name="lidar_serial" type="string" value="$(arg lidar_serial)"/>
             <param name="lidar_ip" type="string" value="$(arg lidar_ip)"/>
-            <param name="frame_id" type="string" value="$(arg robot_name)/$(arg frame_id)"/>
+            <param name="frame_id" type="string" value="$(arg frame_id)"/>
+            <param unless="$(eval robot_name=='/')" name="frame_id" type="string" value="$(arg robot_name)/$(arg frame_id)"/>
             <!-- param name="angle_max"  value="2.3562"/ -->
             <param name="angle_max"  value="2.34"/>
             <!-- param name="angle_min"  value="-2.3562"/ -->
