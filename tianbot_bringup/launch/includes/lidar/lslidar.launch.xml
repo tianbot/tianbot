@@ -9,7 +9,7 @@
   <arg name="difop_port" default="2369" />
   <arg name="return_mode" default="1" />
   <arg name="time_synchronization" default="false" />
-  <group ns="(arg robot_name)">
+  <group ns="$(arg robot_name)">
     <node pkg="lslidar_c16_driver" type="lslidar_c16_driver_node" name="lslidar_c16_driver_node" output="screen">
       <param name="lidar_ip" value="$(arg lidar_ip)"/>
       <param name="device_port" value="2368"/>

@@ -7,7 +7,7 @@
     <arg name="lidar_model" default="$(optenv TIANBOT_LIDAR_MODEL iexxx)" />
     <arg name="lidar_serial" default="/dev/ttyUSB0" />
     <arg name="frame_id" default="laser" />
-    <group ns="(arg robot_name)">
+    <group ns="$(arg robot_name)">
         <node pkg="osight_lidar" type="osight_lidar_node" name="$(arg lidar_name)" output="screen">
             <param name="lidar_model" type="string" value="$(arg lidar_model)"/>
             <param name="lidar_serial" type="string" value="$(arg lidar_serial)"/>
