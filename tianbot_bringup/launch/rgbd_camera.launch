@@ -11,7 +11,7 @@
     <arg name="rgbd_camera" value="$(arg rgbd_camera)" />
   </include>
 
-  <include if="$(eval 'zed' in rgbd_camera)" file="$(find tianbot_bringup)/launch/includes/rgbd_camera/$(arg rgbd_camera).launch.xml" >
+  <include if="$(eval 'zed' in rgbd_camera)" file="$(find tianbot_bringup)/launch/includes/rgbd_camera/zed_no_tf.launch.xml" >
     <arg name="rgbd_camera" value="$(arg rgbd_camera)" />
   </include>
 
