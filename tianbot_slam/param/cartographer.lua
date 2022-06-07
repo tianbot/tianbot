@@ -15,6 +15,8 @@
 include "map_builder.lua"
 include "trajectory_builder.lua"
 
+robot_name = os.getenv("MY_TIANBOT_NAME")
+
 options = {
   map_builder = MAP_BUILDER,
   trajectory_builder = TRAJECTORY_BUILDER,
@@ -42,6 +44,13 @@ options = {
   landmarks_sampling_ratio = 1.,
 }
 
+
+if robot_name != "/" then
+  options.map_frame = robot_name .. "/map"
+  options.tracking_frame = robot_name .. "/base_footprint"
+  options.published_frame = robot_name .. "/odom"
+  options.odom_frame = robot_name .. "/odom"
+end
 
 MAP_BUILDER.use_trajectory_builder_2d = true
 

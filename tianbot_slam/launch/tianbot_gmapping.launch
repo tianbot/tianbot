@@ -3,20 +3,30 @@
 <launch>
     <arg name="base" default="$(optenv TIANBOT_BASE tianbot_omni)" doc="mobile base type [tianbot, tianrover, tianbot_omni, tianbot_mini]"/>
     <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [06q1, 08q1, 08q2, 08q8, etc..]"/>
-    <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+    <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+
     <arg name="base_frame" default="base_footprint" />
+    <arg name="map_frame" default="map" />
     <arg name="odom_frame" default="odom" />
     <arg name="mapping_maxRange" default="$(optenv TIANBOT_MAX_RANGE)" doc="if not set, this value will be calculated using first laserscan"/>
     <arg name="mapping_maxUrange" default="$(optenv TIANBOT_MAX_URANGE)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
 
-    <!-- gmapping -->
-    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen" >
-        <rosparam file="$(find tianbot_slam)/param/gmapping.yaml" command="load" />
-        <param unless="$(eval mapping_maxUrange=='')" name="maxUrange" value="$(arg mapping_maxUrange)"/>
-        <param unless="$(eval mapping_maxRange=='')" name="maxRange" value="$(arg mapping_maxRange)"/>
-        <remap from="scan" to="$(arg robot_name)/scan"/>
-	    <param name="odom_frame" value="$(arg robot_name)/$(arg odom_frame)"/>
-	    <param name="base_frame" value="$(arg robot_name)/$(arg base_frame)"/>
-    </node>
+    <group ns=$(arg robot_name)>
+        <!-- gmapping -->
+        <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen" >
+            <rosparam file="$(find tianbot_slam)/param/gmapping.yaml" command="load" />
+            <param unless="$(eval mapping_maxUrange=='')" name="maxUrange" value="$(arg mapping_maxUrange)"/>
+            <param unless="$(eval mapping_maxRange=='')" name="maxRange" value="$(arg mapping_maxRange)"/>
+
+            <param name="base_frame" value="$(arg base_frame)" />
+            <param name="map_frame" value="$(arg map_frame)" />
+            <param name="odom_frame" value="$(arg odom_frame)" />
+
+            <!-- reset the frame_id if given robot_name -->
+            <param unless="$(eval robot_name=='/')" name="odom_frame" value="$(arg robot_name)/$(arg odom_frame)"/>
+            <param unless="$(eval robot_name=='/')" name="base_frame" value="$(arg robot_name)/$(arg base_frame)"/>
+            <param unless="$(eval robot_name=='/')" name="map_frame" value="$(arg robot_name)/$(arg map_frame)" />
+        </node>
+    </group>
 
 </launch>

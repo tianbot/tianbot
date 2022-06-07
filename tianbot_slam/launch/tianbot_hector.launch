@@ -3,18 +3,24 @@
 <launch>
     <arg name="base" default="$(optenv TIANBOT_BASE tianbot_omni)" doc="mobile base type [tianbot, tianrover, tianbot_omni, tianbot_mini]"/>
     <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [06q1, 08q1, 08q2, 08q8, etc..]"/>
-    <arg name="robot_name" default="$(optenv TIANBOT_NAME)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+    <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
 
-    <arg name="base_frame" default="base_link"/>
-    <arg name="odom_frame" default="odom"/>
-    <arg name="scan_topic" default="$(arg robot_name)/scan"/>
+    <arg name="base_frame" default="base_footprint" />
+    <arg name="map_frame" default="map" />
+    <arg name="odom_frame" default="odom" />
 
-    <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
-	<rosparam file="$(find tianbot_slam)/param/hector.yaml" command="load" />
-        <param name="map_frame" value="map" />
-        <param name="base_frame" value="$(arg base_frame)" />
-        <param name="odom_frame" value="$(arg odom_frame)" />
-        <param name="scan_topic" value="$(arg scan_topic)"/>
-    </node>
+    <group ns=$(arg robot_name)>
+        <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
+            <rosparam file="$(find tianbot_slam)/param/hector.yaml" command="load" />
+            <param name="base_frame" value="$(arg base_frame)" />
+            <param name="map_frame" value="$(arg map_frame)" />
+            <param name="odom_frame" value="$(arg odom_frame)" />
+
+            <!-- reset the frame_id if given robot_name -->
+            <param unless="$(eval robot_name=='/')" name="odom_frame" value="$(arg robot_name)/$(arg odom_frame)"/>
+            <param unless="$(eval robot_name=='/')" name="base_frame" value="$(arg robot_name)/$(arg base_frame)"/>
+            <param unless="$(eval robot_name=='/')" name="map_frame" value="$(arg robot_name)/$(arg map_frame)" />            
+        </node>
+    </group>
 
 </launch>
