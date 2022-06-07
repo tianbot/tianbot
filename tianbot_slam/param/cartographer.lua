@@ -45,7 +45,7 @@ options = {
 }
 
 
-if robot_name != "/" then
+if robot_name ~= "/" then
   options.map_frame = robot_name .. "/map"
   options.tracking_frame = robot_name .. "/base_footprint"
   options.published_frame = robot_name .. "/odom"

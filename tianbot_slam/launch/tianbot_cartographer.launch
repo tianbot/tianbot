@@ -2,22 +2,19 @@
 
 <!-- cartographer slam-->
 <launch>
-  <arg name="base" default="$(optenv TIANBOT_BASE tianbot_omni)" doc="mobile base type [tianbot, tianrover, tianbot_omni, tianbot_mini]"/>
-  <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [06q1, 08q1, 08q2, 08q8, etc..]"/>
-  <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+  <arg name="base" default="$(optenv TIANBOT_BASE tianbot_omni)" doc="mobile base type [tianbot, tianrover, tianbot_omni, tianbot_mini]" />
+  <arg name="base_model" default="$(optenv TIANBOT_BASE_MODEL 06q1)" doc="base model [06q1, 08q1, 08q2, 08q8, etc..]" />
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]" />
 
   <param name="/use_sim_time" value="false" />
 
-  <group ns=$(arg robot_name)>
-    <env name="MY_TIANBOT_NAME" value="$(arg TIANBOT_NAME)" />
-    <node name="cartographer_node" pkg="cartographer_ros"
-        type="cartographer_node" args="
+  <group ns="$(arg robot_name)">
+    <env name="MY_TIANBOT_NAME" value="$(arg robot_name)" />
+    <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" args="
             -configuration_directory $(find tianbot_slam)/param
-            -configuration_basename cartographer.lua"
-        output="screen">
-    </node>
+            -configuration_basename cartographer.lua" output="screen"></node>
 
-    <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
-        type="cartographer_occupancy_grid_node" args="-resolution 0.02" />
-    <!-- node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find cartographer_ros)/configuration_files/demo_2d.rviz"/ --> 
+    <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros" type="cartographer_occupancy_grid_node" args="-resolution 0.02" />
+    <!-- node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find cartographer_ros)/configuration_files/demo_2d.rviz"/ -->
+  </group>
 </launch>
