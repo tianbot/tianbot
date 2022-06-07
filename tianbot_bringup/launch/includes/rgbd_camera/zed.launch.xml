@@ -17,36 +17,35 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <launch>
-    <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
-    <arg name="rgbd_camera"/>  <!-- zed, zed2, zed2i -->
+	<arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]" />
+	<arg name="rgbd_camera" /> <!-- zed, zed2, zed2i -->
 
-    <arg name="svo_file"             default="" /> <!-- <arg name="svo_file" default="path/to/svo/file.svo"> -->
-    <arg name="stream"               default="" /> <!-- <arg name="stream" default="<ip_address>:<port>"> -->
+	<arg name="svo_file" default="" /> <!-- <arg name="svo_file" default="path/to/svo/file.svo"> -->
+	<arg name="stream" default="" /> <!-- <arg name="stream" default="<ip_address>:<port>"> -->
 
-    <arg name="node_name"            default="zed_node" />
-    <arg name="camera_model"         default="$(arg rgbd_camera)" />
-    <arg name="publish_urdf"         default="true" />
+	<arg name="node_name" default="zed_node" />
+	<arg name="camera_model" default="$(arg rgbd_camera)" />
+	<arg name="publish_urdf" default="true" />
 
-    <arg name="camera_name"          default="$(arg rgbd_camera)" />
+	<arg name="camera_name" default="$(arg rgbd_camera)" />
 
-    <arg if="$(eval robot_name=='/')" name="base_frame"           default="camera_link" />
-    <arg unless="$(eval robot_name=='/')" name="base_frame"   value="$(arg robot_name)/camera_link"/>
+	<arg if="$(eval robot_name=='/')" name="base_frame" default="camera_link" />
+	<arg unless="$(eval robot_name=='/')" name="base_frame" value="$(arg robot_name)/camera_link" />
 
-    <arg name="cam_pos_x"             default="0.0" /> <!-- Position respect to base frame (i.e. "base_link) -->
-    <arg name="cam_pos_y"             default="0.0" /> <!-- Position respect to base frame (i.e. "base_link) -->
-    <arg name="cam_pos_z"             default="0.0" /> <!-- Position respect to base frame (i.e. "base_link) -->
-    <arg name="cam_roll"              default="0.0" /> <!-- Orientation respect to base frame (i.e. "base_link) -->
-    <arg name="cam_pitch"             default="0.0" /> <!-- Orientation respect to base frame (i.e. "base_link) -->
-    <arg name="cam_yaw"               default="0.0" /> <!-- Orientation respect to base frame (i.e. "base_link) -->
+	<arg name="cam_pos_x" default="0.0" /> <!-- Position respect to base frame (i.e. "base_link) -->
+	<arg name="cam_pos_y" default="0.0" /> <!-- Position respect to base frame (i.e. "base_link) -->
+	<arg name="cam_pos_z" default="0.0" /> <!-- Position respect to base frame (i.e. "base_link) -->
+	<arg name="cam_roll" default="0.0" /> <!-- Orientation respect to base frame (i.e. "base_link) -->
+	<arg name="cam_pitch" default="0.0" /> <!-- Orientation respect to base frame (i.e. "base_link) -->
+	<arg name="cam_yaw" default="0.0" /> <!-- Orientation respect to base frame (i.e. "base_link) -->
 
-    <arg name="camera_id"             default="0" />
-    <arg name="gpu_id"                default="-1" />
+	<arg name="camera_id" default="0" />
+	<arg name="gpu_id" default="-1" />
 
-    <group ns="$(arg robot_name)">
-        <!-- ROS URDF description of the ZED -->
-        <group if="$(arg publish_urdf)">
-	        <param if="$(eval robot_name=='/')" name="$(arg camera_name)_description"
-	               command="$(find xacro)/xacro '$(find zed_wrapper)/urdf/zed_descr.urdf.xacro'
+	<group ns="$(arg robot_name)">
+		<!-- ROS URDF description of the ZED -->
+		<group if="$(arg publish_urdf)">
+			<param if="$(eval robot_name=='/')" name="$(arg camera_name)_description" command="$(find xacro)/xacro '$(find zed_wrapper)/urdf/zed_descr.urdf.xacro'
 	                        camera_name:=$(arg camera_name)
 	                        camera_model:=$(arg camera_model)
 	                        base_frame:=$(arg base_frame)
@@ -55,10 +54,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	                        cam_pos_z:=$(arg cam_pos_z)
 	                        cam_roll:=$(arg cam_roll)
 	                        cam_pitch:=$(arg cam_pitch)
-	                        cam_yaw:=$(arg cam_yaw)"
-	        />
-	        <param unless="$(eval robot_name=='/')" name="$(arg camera_name)_description"
-	               command="$(find xacro)/xacro '$(find zed_wrapper)/urdf/zed_descr.urdf.xacro'
+	                        cam_yaw:=$(arg cam_yaw)" />
+			<param unless="$(eval robot_name=='/')" name="$(arg camera_name)_description" command="$(find xacro)/xacro '$(find zed_wrapper)/urdf/zed_descr.urdf.xacro'
 		       		camera_name:=$(arg robot_name)/$(arg camera_name)
 	                        camera_model:=$(arg camera_model)
 	                        base_frame:=$(arg base_frame)
@@ -67,36 +64,42 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	                        cam_pos_z:=$(arg cam_pos_z)
 	                        cam_roll:=$(arg cam_roll)
 	                        cam_pitch:=$(arg cam_pitch)
-	                        cam_yaw:=$(arg cam_yaw)"
-	        />
+	                        cam_yaw:=$(arg cam_yaw)" />
 
-	        <node name="$(arg camera_name)_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" required="true">
-	            <remap from="robot_description" to="$(arg camera_name)_description" />
-	        </node>
-        </group>
+			<node name="$(arg camera_name)_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" required="true">
+				<remap from="robot_description" to="$(arg camera_name)_description" />
+			</node>
+		</group>
 
-        <node name="$(arg node_name)" pkg="zed_wrapper" type="zed_wrapper_node" output="screen" required="true"><!-- launch-prefix="valgrind" -->
-	    <rosparam file="$(find zed_wrapper)/params/common.yaml" command="load" />
-	    <rosparam file="$(find zed_wrapper)/params/$(arg camera_model).yaml" command="load" />
+		<node name="$(arg node_name)" pkg="zed_wrapper" type="zed_wrapper_node" output="screen" required="true">
+			<!-- launch-prefix="valgrind" -->
+			<rosparam file="$(find zed_wrapper)/params/common.yaml" command="load" />
+			<rosparam file="$(find zed_wrapper)/params/$(arg camera_model).yaml" command="load" />
 
-	    <!-- Camera name -->
-	    <param if="$(eval robot_name=='/')" name="general/camera_name"               value="$(arg camera_name)" />
-	    <param unless="$(eval robot_name=='/')" name="general/camera_name"               value="$(arg robot_name)/$(arg camera_name)" />
+			<!-- Camera name -->
+			<param if="$(eval robot_name=='/')" name="general/camera_name" value="$(arg camera_name)" />
+			<param unless="$(eval robot_name=='/')" name="general/camera_name" value="$(arg robot_name)/$(arg camera_name)" />
 
-	    <!-- Base frame -->
-	    <param name="general/base_frame"                value="$(arg base_frame)" />
+			<!-- Base frame -->
+			<param if="$(eval robot_name=='/')" name="general/base_frame" value="$(arg base_frame)" />
+			<param unless="$(eval robot_name=='/')" name="general/base_frame" value="$(arg robot_name)/$(arg base_frame)" />
 
-	    <!-- SVO file path -->
-	    <param name="svo_file"                          value="$(arg svo_file)" />
+			<!-- SVO file path -->
+			<param name="svo_file" value="$(arg svo_file)" />
 
-	    <!-- Remote stream -->
-	    <param name="stream"                            value="$(arg stream)" />
+			<!-- Remote stream -->
+			<param name="stream" value="$(arg stream)" />
 
-	    <!-- Camera ID -->
-	    <param name="general/zed_id"                    value="$(arg camera_id)" />
+			<!-- Camera ID -->
+			<param name="general/zed_id" value="$(arg camera_id)" />
 
-	    <!-- GPU ID -->
-	    <param name="general/gpu_id"                    value="$(arg gpu_id)" />
-        </node>
-    </group>
+			<!-- GPU ID -->
+			<param name="general/gpu_id" value="$(arg gpu_id)" />
+
+			<!-- Pos tracking -->
+			<param name="pos_tracking/publish_tf" value="false" />
+			<param name="pos_tracking/publish_map_tf" value="false" />
+
+		</node>
+	</group>
 </launch>
