@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
 <launch>
-    <arg name="map_file" default="$(optenv TIANBOT_MAP_FILE tianbot_office)" />
-    <arg name="map_path" default="$(find tianbot_slam)/maps" />
-    <arg name="slam_methods" default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
-    <node unless="$(eval slam_methods=='cartographer')" pkg="map_server" type="map_saver" name="map_saver" args="-f $(arg map_path)/$(arg map_file)" output="screen"/>
-    <node if="$(eval slam_methods=='cartographer')" pkg="map_server" type="map_saver" name="map_saver" args="--occ 51 --free 49 -f $(arg map_path)/$(arg map_file)" output="screen"/>
+  <arg name="map_file" default="$(optenv TIANBOT_MAP_FILE tianbot_office)" />
+  <arg name="map_path" default="$(find tianbot_slam)/maps" />
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]" />
+  <arg name="slam_methods" default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]" />
+  <node unless="$(eval slam_methods=='cartographer')" ns="$(arg robot_name)" pkg="map_server" type="map_saver" name="map_saver" args="-f $(arg map_path)/$(arg map_file)" output="screen" />
+  <node if="$(eval slam_methods=='cartographer')" ns="$(arg robot_name)" pkg="map_server" type="map_saver" name="map_saver" args="--occ 51 --free 49 -f $(arg map_path)/$(arg map_file)" output="screen" />
 </launch>
-

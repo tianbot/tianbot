@@ -1,7 +1,23 @@
 <launch>
-  <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
-    <remap from="image" to="/usb_cam/image_raw"/>
-    <param name="autosize" value="true" />
-  </node>
-</launch>
+  <arg name="use_rviz" default="true" />
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]" /> 
+  <arg name="video_device" default="$(optenv TIANBOT_VIDEO_DEVICE /dev/video0)" /> 
+  <arg name="rgbd_camera" default="$(optenv TIANBOT_RGBD_CAMERA realsense_d415)" />
 
+  <group ns="$(arg robot_name)" unless="$(eval video_device=='none')">
+    <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+      <remap from="image" to="/usb_cam/image_raw"/>
+      <param name="autosize" value="true" />
+    </node>
+  </group>
+
+  <group ns="$(arg robot_name)" unless="$(eval rgbd_camera=='none')">
+    <node name="rgbd_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+      <remap if="$(eval 'astra' in rgbd_camera)" from="image" to="camera/rgb/image_raw"/>
+      <remap if="$(eval 'zed' in rgbd_camera)" from="image" to="zed_node/rgb_raw/image_raw_color"/>
+      <remap if="$(eval 'realsense_d' in rgbd_camera)" from="image" to="camera/color/image_raw"/>
+      <param name="autosize" value="true" />
+    </node>
+  </group>
+
+</launch>
