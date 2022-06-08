@@ -30,7 +30,16 @@
     <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/move_base_params.yaml" command="load" />
     <rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/$(arg local_planner)_local_planner_params.yaml" command="load" />
     <!-- customized params, may override previous params  -->
-    
+    <!-- rosparam file="$(find tianbot_navigation)/param/$(arg tianbot_base)/obstacle_pointcloud_params.yaml" command="load" /-->    
+    <!-- reset frame_id parameters using user input data -->    
+    <param unless="$(eval robot_name=='/')" name="local_costmap/robot_base_frame" value="$(arg robot_name)/$(arg base_frame_id)"/>
+    <param unless="$(eval robot_name=='/')" name="local_costmap/global_frame" value="$(arg robot_name)/$(arg odom_frame_id)"/>
+    <param unless="$(eval robot_name=='/')" name="local_costmap/scan/sensor_frame" value="$(arg robot_name)/$(arg laser_frame_id)"/>
+    <param unless="$(eval robot_name=='/')" name="local_costmap/scan/topic" value="$(arg robot_name)/$(arg laser_topic)"/>
+    <param unless="$(eval robot_name=='/')" name="global_costmap/robot_base_frame" value="$(arg robot_name)/$(arg base_frame_id)"/>
+    <param unless="$(eval robot_name=='/')" name="global_costmap/global_frame" value="$(arg robot_name)/$(arg global_frame_id)"/>
+    <param unless="$(eval robot_name=='/')" name="global_costmap/scan/sensor_frame" value="$(arg robot_name)/$(arg laser_frame_id)"/>
+    <param unless="$(eval robot_name=='/')" name="global_costmap/scan/topic" value="$(arg robot_name)/$(arg laser_topic)"/>
     <!-- obstacle layer observation sources -->
     <param name="local_costmap/obstacle_layer/observation_sources" value="$(arg obs_sources)" />
     <param name="global_costmap/obstacle_layer/observation_sources" value="$(arg obs_sources)" />

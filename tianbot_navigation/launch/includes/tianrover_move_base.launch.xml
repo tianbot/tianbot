@@ -33,6 +33,17 @@
         
     <param name="clearing_rotation_allowed" value="false" /> <!-- Our carlike robot is not able to rotate in place -->
 
+    <!-- reset frame_id parameters using user input data -->
+    <param unless="$(eval robot_name=='/')" name="local_costmap/robot_base_frame" value="$(arg robot_name)/$(arg base_frame_id)"/>
+    <param unless="$(eval robot_name=='/')" name="local_costmap/global_frame" value="$(arg robot_name)/$(arg odom_frame_id)"/>
+    <param unless="$(eval robot_name=='/')" name="local_costmap/scan/sensor_frame" value="$(arg robot_name)/laser"/>
+    <param unless="$(eval robot_name=='/')" name="local_costmap/scan/topic" value="$(arg robot_name)/scan"
+/>
+    <param unless="$(eval robot_name=='/')" name="global_costmap/robot_base_frame" value="$(arg robot_name)/$(arg base_frame_id)"/>
+    <param unless="$(eval robot_name=='/')" name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
+    <param unless="$(eval robot_name=='/')" name="global_costmap/scan/sensor_frame" value="$(arg robot_name)/$(arg laser_topic)"/>
+    <param unless="$(eval robot_name=='/')" name="global_costmap/scan/topic" value="$(arg robot_name)/$(arg laser_topic)"/>
+
   </node>
 
   <!-- cmd_vel to ackermann_cmd. wheelbase is distance from fromt wheel to middle wheel for tianrover -->

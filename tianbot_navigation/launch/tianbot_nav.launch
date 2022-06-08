@@ -43,10 +43,6 @@
         <include file="$(find tianbot_navigation)/launch/includes/$(arg tianbot_base)_move_base.launch.xml" >
             <arg name="local_planner" value="$(arg local_planner)" />
             <arg name="robot_name" value="$(arg robot_name)" />
-            <arg unless="$(eval robot_name=='/')" name="odom_frame_id"   default="$(arg robot_name)/odom"/>
-            <arg unless="$(eval robot_name=='/')" name="base_frame_id"   default="$(arg robot_name)/base_footprint"/>
-            <arg unless="$(eval robot_name=='/')" name="global_frame_id" default="$(arg robot_name)/map"/>
-            <arg unless="$(eval robot_name=='/')" name="laser_frame_id"   default="$(arg robot_name)/laser"/>
         </include>
 
         <!--  Visualisation -->
