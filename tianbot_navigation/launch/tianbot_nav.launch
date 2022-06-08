@@ -23,7 +23,7 @@
     <arg name="map_path" default="$(find tianbot_slam)/maps" />
     <!-- for navigation -->
 
-    <group ns=$(arg robot_name)>
+    <group ns="$(arg robot_name)">
         <!-- Map server -->
         <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_path)/$(arg map_file).yaml" >
             <param unless="$(eval robot_name=='/')" name="frame_id" value="$(arg robot_name)/map" />
