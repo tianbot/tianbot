@@ -3,7 +3,9 @@ Panels:
     Help Height: 0
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /Global Options1
+        - /Status1
       Splitter Ratio: 0.5
     Tree Height: 292
   - Class: rviz/Selection
@@ -24,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: Camera
+    SyncSource: ""
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -55,38 +57,19 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        base_footprint:
-          Value: true
-        base_link:
-          Value: true
-        camera_link:
-          Value: true
-        imu_link:
-          Value: true
-        laser:
-          Value: true
-        odom:
-          Value: true
+      Marker Alpha: 1
       Marker Scale: 0.30000001192092896
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        odom:
-          base_footprint:
-            base_link:
-              camera_link:
-                {}
-              imu_link:
-                {}
-              laser:
-                {}
+        {}
       Update Interval: 0
       Value: true
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /visualization_marker
+      Marker Topic: visualization_marker
       Name: Marker
       Namespaces:
         {}
@@ -95,7 +78,7 @@ Visualization Manager:
     - Class: rviz/Camera
       Enabled: true
       Image Rendering: background and overlay
-      Image Topic: /usb_cam/image_raw
+      Image Topic: usb_cam/image_raw
       Name: Camera
       Overlay Alpha: 0.5
       Queue Size: 2
@@ -142,6 +125,7 @@ Visualization Manager:
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
+      Field of View: 0.7853981852531433
       Focal Point:
         X: 0.15819010138511658
         Y: -0.02262849174439907
@@ -153,7 +137,6 @@ Visualization Manager:
       Near Clip Distance: 0.009999999776482582
       Pitch: 0.4847973585128784
       Target Frame: <Fixed Frame>
-      Value: Orbit (rviz)
       Yaw: 2.520390748977661
     Saved: ~
 Window Geometry:
@@ -175,4 +158,4 @@ Window Geometry:
     collapsed: true
   Width: 1462
   X: 268
-  Y: 117
+  Y: 80

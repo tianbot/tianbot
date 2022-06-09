@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 
 <launch>
-    <arg name="use_rviz" default="true" />
-
-    <!-- Rviz -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tianbot_rviz)/rviz_cfg/eband_navigation.rviz" if="$(arg use_rviz)" />
+  <arg name="use_rviz" default="true" />
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]" />
+  <!-- Rviz -->
+  <node ns="$(arg robot_name)" name="rviz" pkg="rviz" type="rviz" args="-d $(find tianbot_rviz)/rviz_cfg/eband_navigation.rviz -f $(arg robot_name)/map" if="$(arg use_rviz)">
+    <remap from="/move_base_simple/goal" to="move_base_simple/goal" />
+    <remap from="/initialpose" to="initialpose" />
+  </node>
 </launch>

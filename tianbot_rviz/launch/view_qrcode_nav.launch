@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
 
 <launch>
-    <arg name="use_rviz" default="true" />
-
-    <!-- Rviz -->
-    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find tianbot_rviz)/rviz_cfg/tianbot_qrcode_nav.rviz" if="$(arg use_rviz)"/>
+  <arg name="use_rviz" default="true" />
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]" />
+  <arg name="video_device" default="$(optenv TIANBOT_VIDEO_DEVICE /dev/video0)" /> 
+  <arg name="rgbd_camera" default="$(optenv TIANBOT_RGBD_CAMERA realsense_d415)" /> 
+  <!-- Rviz -->
+  <node ns="$(arg robot_name)" pkg="rviz" type="rviz" name="rviz" args="-d $(find tianbot_rviz)/rviz_cfg/tianbot_qrcode_nav.rviz -f $(arg robot_name)/odom" if="$(arg use_rviz)" >
+    <remap if="$(eval 'astra' in rgbd_camera)" from="usb_cam/image_raw" to="camera/rgb/image_raw"/>
+    <remap if="$(eval 'zed' in rgbd_camera)" from="usb_cam/image_raw" to="zed_node/rgb_raw/image_raw_color"/>
+    <remap if="$(eval 'realsense_d' in rgbd_camera)" from="usb_cam/image_raw" to="camera/color/image_raw"/>
+  </node>
 
 </launch>
