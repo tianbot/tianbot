@@ -2,7 +2,7 @@ EBandPlannerROS:
 
   costmap_weight : 12.0
   Ctrl_Rate : 10.0
-  differential_drive : false
+  differential_drive : true
   max_translational_acceleration : 0.5  
   max_rotational_acceleration : 1.2  
   max_vel_lin : 0.5

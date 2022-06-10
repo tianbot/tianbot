@@ -19,10 +19,10 @@ TebLocalPlannerROS:
           
   max_vel_x: 0.4
   max_vel_x_backwards: 0.2
-  max_vel_y: 0.1
+
   max_vel_theta: 0.3
   acc_lim_x: 0.5
-  acc_lim_y: 0.2
+
   acc_lim_theta: 0.5
   min_turning_radius: 0.0 # omni-drive robot (can turn on place!)
 
@@ -56,12 +56,12 @@ TebLocalPlannerROS:
   penalty_epsilon: 0.1
   obstacle_cost_exponent: 4
   weight_max_vel_x: 2
-  weight_max_vel_y: 2
+
   weight_max_vel_theta: 1
   weight_acc_lim_x: 1.0
-  weight_acc_lim_y: 1.0
+
   weight_acc_lim_theta: 1.0
-  weight_kinematics_nh: 1 # WE HAVE A HOLONOMIC ROBOT, JUST ADD A SMALL PENALTY
+  weight_kinematics_nh: 1000 # 1000 for nh, 1 for holonomic
   weight_kinematics_forward_drive: 1
   weight_kinematics_turning_radius: 1
   weight_optimaltime: 1 # must be > 0

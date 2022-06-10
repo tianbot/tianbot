@@ -5,6 +5,17 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /Local Planner1/TebPoses1
+        - /Local Planner1/TebMarker1
+        - /Local Planner1/LocalPath1
+        - /Local Planner1/LocalCostmap1
+        - /Global Planner1/GlobalPath1
+        - /Global Planner1/GlobalCostmap1
+        - /Robot1/Robot Footprint1
+        - /Robot1/LaserScan1
+        - /Robot1/AMCL Particles1
+        - /Robot1/Odometry1
+        - /Robot1/Axes1
       Splitter Ratio: 0.6050959825515747
     Tree Height: 716
   - Class: rviz/Selection
@@ -57,7 +68,7 @@ Visualization Manager:
       Draw Behind: false
       Enabled: true
       Name: Map
-      Topic: /map
+      Topic: map
       Unreliable: false
       Use Timestamp: false
       Value: true
@@ -73,15 +84,16 @@ Visualization Manager:
           Head Length: 0.07000000029802322
           Head Radius: 0.029999999329447746
           Name: TebPoses
+          Queue Size: 10
           Shaft Length: 0.23000000417232513
           Shaft Radius: 0.009999999776482582
           Shape: Arrow (Flat)
-          Topic: /move_base/TebLocalPlannerROS/teb_poses
+          Topic: move_base/TebLocalPlannerROS/teb_poses
           Unreliable: false
           Value: true
         - Class: rviz/Marker
           Enabled: true
-          Marker Topic: /move_base/TebLocalPlannerROS/teb_markers
+          Marker Topic: move_base/TebLocalPlannerROS/teb_markers
           Name: TebMarker
           Namespaces:
             {}
@@ -104,10 +116,11 @@ Visualization Manager:
             Z: 0
           Pose Color: 255; 85; 255
           Pose Style: None
+          Queue Size: 10
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
-          Topic: /move_base/TebLocalPlannerROS/local_plan
+          Topic: move_base/TebLocalPlannerROS/local_plan
           Unreliable: false
           Value: true
         - Alpha: 0.4000000059604645
@@ -116,7 +129,7 @@ Visualization Manager:
           Draw Behind: false
           Enabled: true
           Name: LocalCostmap
-          Topic: /move_base/local_costmap/costmap
+          Topic: move_base/local_costmap/costmap
           Unreliable: false
           Use Timestamp: false
           Value: true
@@ -141,10 +154,11 @@ Visualization Manager:
             Z: 0
           Pose Color: 255; 85; 255
           Pose Style: None
+          Queue Size: 10
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
-          Topic: /move_base/TebLocalPlannerROS/global_plan
+          Topic: move_base/TebLocalPlannerROS/global_plan
           Unreliable: false
           Value: true
         - Alpha: 0.699999988079071
@@ -153,7 +167,7 @@ Visualization Manager:
           Draw Behind: false
           Enabled: true
           Name: GlobalCostmap
-          Topic: /move_base/global_costmap/costmap
+          Topic: move_base/global_costmap/costmap
           Unreliable: false
           Use Timestamp: false
           Value: true
@@ -166,7 +180,8 @@ Visualization Manager:
           Color: 85; 0; 255
           Enabled: true
           Name: Robot Footprint
-          Topic: /move_base/local_costmap/footprint
+          Queue Size: 10
+          Topic: move_base/local_costmap/footprint
           Unreliable: false
           Value: true
         - Alpha: 1
@@ -184,9 +199,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 56705
           Min Color: 0; 0; 0
-          Min Intensity: 546
           Name: LaserScan
           Position Transformer: XYZ
           Queue Size: 10
@@ -194,7 +207,7 @@ Visualization Manager:
           Size (Pixels): 3
           Size (m): 0.05000000074505806
           Style: Flat Squares
-          Topic: /scan
+          Topic: scan
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
@@ -205,21 +218,23 @@ Visualization Manager:
           Axes Radius: 0.009999999776482582
           Class: rviz/PoseArray
           Color: 255; 25; 0
-          Enabled: false
+          Enabled: true
           Head Length: 0.07000000029802322
           Head Radius: 0.029999999329447746
           Name: AMCL Particles
+          Queue Size: 10
           Shaft Length: 0.23000000417232513
           Shaft Radius: 0.009999999776482582
           Shape: Arrow (Flat)
-          Topic: /particlecloud
+          Topic: particlecloud
           Unreliable: false
-          Value: false
+          Value: true
         - Class: rviz/TF
           Enabled: false
           Frame Timeout: 15
           Frames:
             All Enabled: true
+          Marker Alpha: 1
           Marker Scale: 1
           Name: TF
           Show Arrows: true
@@ -246,10 +261,11 @@ Visualization Manager:
               Scale: 1
               Value: true
             Value: true
-          Enabled: false
+          Enabled: true
           Keep: 100
           Name: Odometry
           Position Tolerance: 0.10000000149011612
+          Queue Size: 10
           Shape:
             Alpha: 1
             Axes Length: 1
@@ -260,15 +276,17 @@ Visualization Manager:
             Shaft Length: 1
             Shaft Radius: 0.05000000074505806
             Value: Arrow
-          Topic: /odom
+          Topic: odom
           Unreliable: false
-          Value: false
-        - Class: rviz/Axes
+          Value: true
+        - Alpha: 1
+          Class: rviz/Axes
           Enabled: true
           Length: 1
           Name: Axes
           Radius: 0.10000000149011612
-          Reference Frame: base_footprint
+          Reference Frame: <Fixed Frame>
+          Show Trail: false
           Value: true
       Enabled: true
       Name: Robot
@@ -276,7 +294,7 @@ Visualization Manager:
   Global Options:
     Background Color: 255; 255; 255
     Default Light: true
-    Fixed Frame: map
+    Fixed Frame: tianbot_01/map
     Frame Rate: 30
   Name: root
   Tools:
@@ -311,7 +329,6 @@ Visualization Manager:
       Near Clip Distance: 0.009999999776482582
       Scale: 100
       Target Frame: <Fixed Frame>
-      Value: TopDownOrtho (rviz)
       X: 0
       Y: 0
     Saved: ~
