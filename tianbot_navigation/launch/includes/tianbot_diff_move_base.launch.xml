@@ -40,6 +40,7 @@
     <param unless="$(eval robot_name=='/')" name="global_costmap/global_frame" value="$(arg robot_name)/$(arg global_frame_id)"/>
     <param unless="$(eval robot_name=='/')" name="global_costmap/scan/sensor_frame" value="$(arg robot_name)/$(arg laser_frame_id)"/>
     <param unless="$(eval robot_name=='/')" name="global_costmap/scan/topic" value="$(arg robot_name)/$(arg laser_topic)"/>
+    <param unless="$(eval robot_name=='/')" name="DWAPlannerROS/global_frame_id" value="$(arg robot_name)/$(arg odom_frame_id)"/>
     <!-- obstacle layer observation sources -->
     <param name="local_costmap/obstacle_layer/observation_sources" value="$(arg obs_sources)" />
     <param name="global_costmap/obstacle_layer/observation_sources" value="$(arg obs_sources)" />
