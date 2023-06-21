@@ -11,6 +11,8 @@
 
   <include if="$(eval 'richbeam_lidar' in lidar)" file="$(find tianbot_bringup)/launch/includes/lidar/richbeam_lidar.launch.xml" />
 
+  <include if="$(eval 'livox' in lidar)" file="$(find tianbot_bringup)/launch/includes/lidar/livox.launch.xml" />
+
   <include if="$(eval 'lslidar' in lidar)" file="$(find tianbot_bringup)/launch/includes/lidar/lslidar.launch.xml" />
   
   <include if="$(eval 'rslidar' in lidar)" file="$(find tianbot_bringup)/launch/includes/lidar/rslidar.launch.xml" />

@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="lidar" default="$(optenv TIANBOT_LIDAR)" />
+  <arg name="model" default="$(optenv TIANBOT_LIDAR_MODEL mid360)" />
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>  
+  <arg name="device_ip" default="$(optenv TIANBOT_LIDAR_IP 192.168.1.200)" />
+  <arg name="lidar_param_path" default="$(find tianbot_bringup)/launch/includes/tianrover/MID360_config.json"/>
+
+  <arg name="lvx_file_path" default="livox_test.lvx"/>
+  <arg name="bd_list" default="100000000000000"/>
+  <arg name="xfer_format" default="0"/>
+  <arg name="multi_topic" default="0"/>
+  <arg name="data_src" default="0"/>
+  <arg name="publish_freq" default="10.0"/>
+  <arg name="output_type" default="0"/>
+  <arg name="rviz_enable" default="false"/>
+  <arg name="rosbag_enable" default="false"/>
+  <arg name="cmdline_arg" default="$(arg bd_list)"/>
+  <arg name="msg_frame_id" default="laser"/>
+  <arg name="lidar_bag" default="true"/>
+  <arg name="imu_bag" default="true"/>
+  <!--user configure parameters for ros end-->
+
+  <group ns="$(arg robot_name)">
+    <param name="xfer_format" value="$(arg xfer_format)"/>
+    <param name="multi_topic" value="$(arg multi_topic)"/>
+    <param name="data_src" value="$(arg data_src)"/>
+    <param name="publish_freq" type="double" value="$(arg publish_freq)"/>
+    <param name="output_data_type" value="$(arg output_type)"/>
+    <param name="cmdline_str" type="string" value="$(arg bd_list)"/>
+    <param name="cmdline_file_path" type="string" value="$(arg lvx_file_path)"/>
+    <param name="user_config_path" type="string" value="$(arg lidar_param_path)"/>
+ 
+    <param name="frame_id" value="laser" />
+    <param unless="$(eval robot_name=='/')" name="frame_id" type="string" value="$(arg robot_name)/laser"/>
+
+    <param name="enable_lidar_bag" type="bool" value="$(arg lidar_bag)"/>
+    <param name="enable_imu_bag" type="bool" value="$(arg imu_bag)"/>
+
+    <node name="livox_lidar_publisher2" pkg="livox_ros_driver2"
+          type="livox_ros_driver2_node" required="true"
+          output="screen" args="$(arg cmdline_arg)" >
+      <remap from="livox/lidar" to="lidar_points" />
+    </node>
+
+    <!-- run pointcloud_to_laserscan -->
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+
+      <remap from="cloud_in" to="lidar_points"/>
+      <remap from="scan" to="scan_raw"/>
+      <rosparam>
+        transform_tolerance: 0.01
+        min_height: -0.35
+        max_height: 0.2
+
+        angle_min: -3.1415926 # -M_PI/2
+        angle_max: 3.1415926 # M_PI/2
+        angle_increment: 0.0087 # M_PI/360.0
+        scan_time: 0.1
+        range_min: 0.45
+        range_max: 40.0
+        use_inf: true
+        inf_epsilon: 1.0
+
+        # Concurrency level, affects number of pointclouds queued for processing and number of threads used
+        # 0 : Detect number of cores
+        # 1 : Single threaded
+        # 2->inf : Parallelism level
+        concurrency_level: 0
+      </rosparam>
+      <param name="target_frame" value="laser" />
+      <param unless="$(eval robot_name=='/')" name="target_frame" type="string" value="$(arg robot_name)/laser"/>
+    </node>
+
+    <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter" >
+        <rosparam command="load" file="$(find tianbot_bringup)/launch/includes/tianrover/tianbot_laser_config.yaml" />
+        <remap from="scan" to="scan_raw"/>
+        <remap from="scan_filtered" to="scan"/>
+    </node>
+  </group> 
+</launch>

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
 <launch>
-  <arg name="lidar" default="$(optenv TIANRACER_LIDAR)" />
-  <arg name="model" default="$(optenv TIANRACER_LIDAR_MODEL RS16)" />
+  <arg name="lidar" default="$(optenv TIANBOT_LIDAR)" />
+  <arg name="model" default="$(optenv TIANBOT_LIDAR_MODEL rs16)" />
   <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>  
-  <arg name="device_ip" default="$(optenv TIANRACER_LIDAR_IP 192.168.1.200)" />
+  <arg name="device_ip" default="$(optenv TIANBOT_LIDAR_IP 192.168.1.200)" />
   <arg name="msop_port" default="6699" />
   <arg name="difop_port" default="7788" />
   <arg name="cut_angle" default="0" doc="If set at [0, 360), cut at specific angle feature activated, oth
@@ -66,4 +66,3 @@ erwise use the fixed packets number mode."/>
     </node>
   </group> 
 </launch>
-
