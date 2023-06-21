@@ -28,18 +28,18 @@ obstacle_layer:
     #    pay much attention to the range of the obstacles
     #    min_obstacle_height: 0.05
     #    max_obstacle_height: 0.55
-  depth_points:
-    data_type: PointCloud2
-    topic: camera/depth_registered/points
-    marking: true
-    clearing: true
-    min_obstacle_height: 0.2
-    expected_update_rate: 2
-  lidar_points:
-    data_type: PointCloud2
-    topic: lidar_points
-    marking: true
-    clearing: true
+  # depth_points:
+  #   data_type: PointCloud2
+  #   topic: camera/depth_registered/points
+  #   marking: true
+  #   clearing: true
+  #   min_obstacle_height: 0.2
+  #   expected_update_rate: 2
+  # lidar_points:
+  #   data_type: PointCloud2
+  #   topic: lidar_points
+  #   marking: true
+  #   clearing: true
 
 
 inflation_layer:

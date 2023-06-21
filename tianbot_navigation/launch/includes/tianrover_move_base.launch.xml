@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="robot_name" />
+  <arg name="local_planner" />
   <arg name="odom_frame_id"   default="odom"/>
   <arg name="base_frame_id"   default="base_link"/>
   <arg name="global_frame_id" default="map"/>
