@@ -4,8 +4,6 @@ import threading
 import rospy
 
 from std_msgs.msg import String                     # motion_mode msgs type
-from geometry_msgs.msg import Twist                 # cmd_vel msgs type  (rotate and onmi)
-from geometry_msgs.msg import TwistStamped
 from ackermann_msgs.msg import AckermannDrive       # cmd_vel msgs type (ackermann)
 from ackermann_msgs.msg import AckermannDriveStamped
 
@@ -43,9 +41,8 @@ b : down (-z)
 
 anything else : stop
 
-q/z : increase/decrease max speeds by 10%
-w/x : increase/decrease only linear speed by 10%
-e/c : increase/decrease only angular speed by 10%
+w/x : increase/decrease only steering_angle speed by 10%
+e/c : increase/decrease only th speed by 10%
 
 CTRL-C to quit
 """
@@ -53,7 +50,7 @@ CTRL-C to quit
 modeBindings = {
         'a':"ackermann",
         's':"rotate",
-        'z':"omni",
+        'd':"omni",
 }
 
 moveBindings = {
@@ -89,11 +86,12 @@ speedBindings={
 class PublishThread(threading.Thread):
     def __init__(self,rate):
         super(PublishThread, self).__init__()
-        self.publisher = rospy.Publisher('ackermann_cmd', AckermannDriveStamped, queue_size = 1)
+        self.publisher = rospy.Publisher('ackermann_cmd', AckermannDrive, queue_size = 1)
         self.motion_mode_publisher = rospy.Publisher('motion_mode', String, queue_size = 10)
         self.speed = 0.0
-        self.turn = 0.0
-        self.motion_mode = "ackermann"
+        self.steering_angle = 0.0
+        self.th = 0.0
+        self.motion_mode = " "
         self.condition = threading.Condition()
         self.done = False
 
@@ -117,15 +115,16 @@ class PublishThread(threading.Thread):
         if rospy.is_shutdown():
             raise Exception("Got shutdown request before subscribers connected")
 
-    def update(self, turn, speed, motion_mode):
+    def update(self, th, steering_angle, speed, motion_mode):
         self.condition.acquire()
 
         # topic 
-        self.steering_angle  = turn
-        self.steering_angle_velocity = 1.0
+        self.steering_angle = steering_angle
+        self.steering_angle_velocity = 0.0
         self.speed = speed
-        self.acceleration= 1.0
-        self.jerk = 0.5
+        self.acceleration= 0.0
+        self.jerk = 0.0
+        self.th = th
 
         # topic motion_mode  ackmann rotate omni
         self.motion_mode = motion_mode
@@ -136,17 +135,17 @@ class PublishThread(threading.Thread):
          
     def stop(self):
         self.done = True
-        self.update(0, 0, "ackermann")
+        self.update(0, 0, 0, "ackermann")
         self.join()
 
     def run(self):
         # ackmann rotate omni
 
-        ackerman_msg = AckermannDriveStamped()
+        ackerman_msg = AckermannDrive()
         motion_mode_msg = String()
 
         if stamped:
-            ackerman = AckermannDriveStamped()
+            ackerman = AckermannDrive()
             ackerman_msg.header.stamp = rospy.Time.now()
             ackerman_msg.header.frame_id = cmd_frame
         else:
@@ -158,14 +157,15 @@ class PublishThread(threading.Thread):
             
             # wait for a new message ot timeout
             self.condition.wait(self.timeout)
-            # Copy state into twist message
-            # motion_moode "ackermann" | "rotate"  | "omni"
 
-            ackerman.drive.speed = speed
-            ackerman.drive.acceleration = 0
-            ackerman.drive.jerk = 0
-            ackerman.drive.steering_angle = turn
-            ackerman.drive.steering_angle_velocity = 0
+            # ackerman.steering_angle = self.steering_angle * self.th
+            ackerman.steering_angle = self.steering_angle
+            ackerman.steering_angle_velocity = 0
+            ackerman.speed = self.speed
+            ackerman.acceleration = 0
+            ackerman.jerk = 0
+
+            # motion_moode "ackermann" | "rotate"  | "omni"
             motion_mode_msg.data = motion_mode
 
             self.condition.release()
@@ -175,12 +175,11 @@ class PublishThread(threading.Thread):
             self.motion_mode_publisher.publish(motion_mode_msg)
 
         # Publish stop message when thread exits.
-        ackerman.drive.speed = 0
-        ackerman.drive.acceleration = 0
-        ackerman.drive.jerk = 0
-        ackerman.drive.steering_angle = 0
-        ackerman.drive.steering_angle_velocity = 0
-
+        ackerman.speed = 0
+        ackerman.acceleration = 0
+        ackerman.jerk = 0
+        ackerman.steering_angle = 0
+        ackerman.steering_angle_velocity = 0
 
         self.publisher.publish(ackerman_msg)
         self.motion_mode_publisher.publish(motion_mode_msg)
@@ -193,7 +192,7 @@ def motion_mode_switch(key):                                     # switch motion
         rospy.loginfo("rover motion mode set to ackermann")
     elif (key == 's'):              # MOVE_TYPE_ROTATE   
         rospy.loginfo("rover motion mode set to rotate")  
-    elif (key == 'z'):     # MOVE_TYPE_OMNI 
+    elif (key == 'd'):     # MOVE_TYPE_OMNI 
         rospy.loginfo("rover motion mode set to omni")
     else:
         rospy.loginfo("tianrover motion mode set failed, only ackermann / rotate / omni supported!")
@@ -226,8 +225,8 @@ def restoreTerminalSettings(old_settings):
         return
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
 
-def vels(speed, turn):
-    return "currently:\tspeed: %s\tturn: %s\tmotion_mode: %s " % (speed,turn,motion_mode)
+def vels(speed, steering_angle):
+    return "currently:\tspeed: %s\tturn: %s " % (speed, steering_angle)
 
 if __name__=="__main__":
     settings = saveTerminalSettings()
@@ -235,7 +234,7 @@ if __name__=="__main__":
     rospy.init_node("tianrover_teleop_keybroad")
 
     speed = rospy.get_param("~speed", 0.2)
-    turn  = rospy.get_param("~turn",0.0)
+    steering_angle  = rospy.get_param("~steering_angle",0.1)
     motion_mode = rospy.get_param("~motion_mode", 'ackermann')
     speed_limit = rospy.get_param("~speed_limit", 1000)
     turn_limit = rospy.get_param("~turn_limit", 1000)
@@ -251,24 +250,25 @@ if __name__=="__main__":
 
     pub_thread = PublishThread(repeat)
 
-    steering_angle_velocity = 0
-    acceleration= 0
+    th = 0
     jerk = 0
     status = 0
+    acceleration= 0
     old_motion_mode = ''
+    steering_angle_velocity = 0
 
     try:
         pub_thread.wait_for_subscribers()
-        pub_thread.update(speed, turn, motion_mode)
+        pub_thread.update(th, steering_angle, speed, motion_mode)
 
         print(msg)
-        print(vels(speed, turn))
+        print(vels(speed, steering_angle))
 
         while(1):
             key = getKey(settings, key_timeout)
             
             # motion_mode
-            if key != '' and key == 'a' or key == 's' or key == 'z':
+            if key != '' and key == 'a' or key == 's' or key == 'd':
                 motion_mode = motion_mode_switch(key)
                 old_motion_mode = motion_mode
             else:
@@ -277,31 +277,33 @@ if __name__=="__main__":
             
             if key in moveBindings.keys():
                 speed = moveBindings[key][0]
-                turn = moveBindings[key][1]
+                th = moveBindings[key][1]
+                steering_angle = moveBindings[key][3]
             elif key in speedBindings.keys():
                 speed = min(speed_limit, speed * speedBindings[key][0])
-                turn = min(turn_limit, turn * speedBindings[key][1])
+                steering_angle = min(turn_limit, steering_angle * speedBindings[key][1])
                 if speed == speed_limit:
                     print("Linear speed limit reached!")
-                if turn == turn_limit:
+                if steering_angle == turn_limit:
                     print("Angular speed limit reached!")
-                print(vels(speed, turn))
+                print(vels(speed, steering_angle))
                 if (status == 14):
                     print(msg)
                 status = (status +1) % 15
             else:
                 # Skip update cmd if key timeout and robot already stopped
-                if key == '' and speed == 0 and turn == 0:
+                if key == '' and speed == 0 and steering_angle == 0 and th == 0:
                     continue
                 speed = 0
-                turn = 0
+                steering_angle = 0
+                th = 0
                 if(key == '\x03'):       # Ctrl + c
                     break
             
             # avoid the except key('a','s','z') to change the current motion_mode
-            if key != 'a' or key != 's' or key !='z':
+            if key != 'a' or key != 's' or key !='d':
                 motion_mode = old_motion_mode
-            pub_thread.update(speed, turn, motion_mode)
+            pub_thread.update(th, steering_angle, speed, motion_mode)
 
     except Exception as e:
         #print(f"Exception in thread: {e}")
