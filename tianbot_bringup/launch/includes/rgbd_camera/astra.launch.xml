@@ -5,14 +5,14 @@
 into the "camera" namespace, and it is prepended to tf frame ids. -->
   <arg name="rgbd_camera"/>  <!-- astra, astra_pro, xtion is compatible with astra -->
   <arg name="camera"      default="camera"/>
-  <arg name="publish_tf"  default="true"/>
+  <arg name="publish_tf"  default="false"/>
 
   <!-- Laserscan topic -->
   <arg name="scan_topic" default="depth_scan"/>
 
   <!-- Factory-calibrated depth registration -->
   <arg name="depth_registration"              default="true"/>
-  <arg     if="$(arg depth_registration)" name="depth" value="depth_registered" />
+  <arg if="$(arg depth_registration)" name="depth" value="depth_registered" />
   <arg unless="$(arg depth_registration)" name="depth" value="depth" />
 
   <!-- Processing Modules -->
