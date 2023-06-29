@@ -7,12 +7,9 @@
   <include if="$(eval 'realsense_d' in rgbd_camera)" file="$(find realsense2_camera)/launch/rs_rgbd.launch" >
   </include>
 
-  <group ns="$(arg robot_name)">
-    <include if="$(eval 'astra' in rgbd_camera)" file="$(find tianbot_bringup)/launch/includes/rgbd_camera/astra.launch.xml" >
-      <arg name="rgbd_camera" value="$(arg rgbd_camera)" />
-      <arg if="$(eval robot_name=='/')" name="publish_tf"  value="true" />
-    </include>
-  </group>
+  <include if="$(eval 'astra' in rgbd_camera)" file="$(find tianbot_bringup)/launch/includes/rgbd_camera/astra.launch.xml" >
+    <arg name="camera_name" value="$(arg robot_name)/camera" />
+  </include>
 
   <include if="$(eval 'zed' in rgbd_camera)" file="$(find tianbot_bringup)/launch/includes/rgbd_camera/zed.launch.xml" >
     <arg name="rgbd_camera" value="$(arg rgbd_camera)" />

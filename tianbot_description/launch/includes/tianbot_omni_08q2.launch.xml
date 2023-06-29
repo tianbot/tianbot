@@ -18,9 +18,5 @@
         <node if="$(eval 'osight' in lidar)" pkg="tf" type="static_transform_publisher" name="base_link2laser" args="0.211 0 0.2 0 0 0 $(arg robot_name)/base_link $(arg robot_name)/laser 20"/>
         <node pkg="tf" type="static_transform_publisher" name="base_link2imu" args="0.22 0 0.1 0 0 0 $(arg robot_name)/base_link $(arg robot_name)/imu_link 20"/>
         <node pkg="tf" type="static_transform_publisher" name="base_link2camera" args="0.275 0 0.25 0 0 0 $(arg robot_name)/base_link $(arg robot_name)/camera_link 20"/>
-        <include file="$(find astra_camera)/launch/includes/astra_frames.launch">
-            <arg name="camera" value="$(arg camera)" />
-            <arg name="tf_prefix" value="$(arg robot_name)" />
-        </include>
     </group>
 </launch>
