@@ -22,19 +22,13 @@ Reading from the keyboard  and Publishing to Ackermann or Twist!
 Motion mode:
    a: ackermann mode
    s: rotate mode
-   z: onmi mode
+   d: onmi mode
 
 ---------------------------
 Moving around:
    u    i    o
    j    k    l
    m    ,    .
-
-For Holonomic mode (strafing), hold down the shift key:
----------------------------
-   U    I    O
-   J    K    L
-   M    <    >
 
 t : up (+z)
 b : down (-z)
