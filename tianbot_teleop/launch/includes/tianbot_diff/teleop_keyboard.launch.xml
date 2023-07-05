@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="robot_name" />
+  <arg name="stamped" default="False" />
+  <arg name="frame_id" default="base_footprint" />
+  <arg name="speed" default="0.2" />
+  <arg name="turn" default="0.1" />
+
+
+  <group ns="$(arg robot_name)">
+    <node pkg="tianbot_teleop" type="teleop_twist_keyboard.py" name="tianbot_diff_teleop" output="screen">
+      <param name="speed" type="double" value="$(arg speed)"/>
+      <param name="turn" type="double" value="$(arg turn)"/>
+      <param name="stamped" type="bool" value="$(arg stamped)"/>
+      <param name="frame_id" type="string" value="$(arg frame_id)"/>
+      
+      <param unless="$(eval robot_name=='/')" name="base_frame" type="string" value="$(arg robot_name)/$(arg base_frame)"/>
+
+      <remap from="base/cmd_vel" to="cmd_vel" />
+    </node>
+  </group>
+</launch>
