@@ -1,33 +1,23 @@
 <?xml version="1.0"?>
 
 <launch>
-  <arg name="serial_port" />
-  <arg name="serial_baudrate" />
   <arg name="robot_name" />
-  <arg name="type" default="omni" />
-  <arg name="type_verify" default="true" />
-  <arg name="base_frame" default="base_footprint" />
-  <arg name="odom_frame" default="odom"/>
-  <arg name="imu_frame" default="imu_link"/>
+  <arg name="stamped" default="False" />
+  <arg name="frame_id" default="base_footprint" />
+  <arg name="speed" default="0.2" />
+  <arg name="turn" default="0.1" />
+
 
   <group ns="$(arg robot_name)">
-    <node pkg="tianbot_core" type="tianbot_core" name="base" output="screen">
-      <param name="serial_port" type="string" value="$(arg serial_port)"/>
-      <param name="serial_baudrate" type="int" value="$(arg serial_baudrate)"/>
-      <param name="type" type="string" value="$(arg type)"/>
-      <param name="type_verify" type="bool" value="$(arg type_verify)"/>
-      <param name="base_frame" type="string" value="$(arg base_frame)"/>
-      <param name="odom_frame" type="string" value="$(arg odom_frame)"/>
-      <param name="imu_frame" type="string" value="$(arg imu_frame)"/>
+    <node pkg="tianbot_teleop" type="teleop_twist_keyboard.py" name="tianbot_onmi_teleop" output="screen">
+      <param name="speed" type="double" value="$(arg speed)"/>
+      <param name="turn" type="double" value="$(arg turn)"/>
+      <param name="stamped" type="bool" value="$(arg stamped)"/>
+      <param name="frame_id" type="string" value="$(arg frame_id)"/>
       
       <param unless="$(eval robot_name=='/')" name="base_frame" type="string" value="$(arg robot_name)/$(arg base_frame)"/>
-      <param unless="$(eval robot_name=='/')" name="odom_frame" type="string" value="$(arg robot_name)/$(arg odom_frame)"/>
-      <param unless="$(eval robot_name=='/')" name="imu_frame" type="string" value="$(arg robot_name)/$(arg imu_frame)"/>
 
-      <remap from="base/imu" to="imu" />
-      <remap from="base/odom" to="odom" />
       <remap from="base/cmd_vel" to="cmd_vel" />
-      <remap from="base/uwb" to="uwb" /> 
     </node>
   </group>
 </launch>

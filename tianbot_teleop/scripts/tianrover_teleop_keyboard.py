@@ -158,7 +158,6 @@ class PublishThread(threading.Thread):
             # wait for a new message ot timeout
             self.condition.wait(self.timeout)
 
-            # ackerman.steering_angle = self.steering_angle * self.th
             ackerman.steering_angle = self.steering_angle
             ackerman.steering_angle_velocity = 0
             ackerman.speed = self.speed
@@ -234,7 +233,7 @@ if __name__=="__main__":
     rospy.init_node("tianrover_teleop_keybroad")
 
     speed = rospy.get_param("~speed", 0.2)
-    steering_angle  = rospy.get_param("~steering_angle",0.1)
+    steering_angle  = rospy.get_param("~turn",0.1)
     motion_mode = rospy.get_param("~motion_mode", 'ackermann')
     speed_limit = rospy.get_param("~speed_limit", 1000)
     turn_limit = rospy.get_param("~turn_limit", 1000)

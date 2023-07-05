@@ -232,8 +232,6 @@ if __name__=="__main__":
                 y = moveBindings[key][1]
                 z = moveBindings[key][2]
                 th = moveBindings[key][3]
-                print("x: {0} , y: {1} , z: {2} , th: {3}".format(x,y,z,th))
-
             elif key in speedBindings.keys():
                 speed = min(speed_limit, speed * speedBindings[key][0])
                 turn = min(turn_limit, turn * speedBindings[key][1])
