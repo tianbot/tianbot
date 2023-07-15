@@ -24,10 +24,12 @@ Customized
 
 # Instructions
 ## Installation
-
+**tianbot** is the software framework.  
+**tianbot_core** is the driver for all the tianbot mobile platforms.
 ```
 cd ~/catkin_ws/src/
-git clone https://github.com/tianbot/tianbot.git --recurse-submodules
+git clone https://github.com/tianbot/tianbot.git
+git clone https://github.com/tianbot/tianbot_core.git
 cd ~/catkin_ws && catkin_make
 ```
 

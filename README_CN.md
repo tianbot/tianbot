@@ -24,10 +24,12 @@ Tianbot系列机器人不仅有标准平台，同时可以通过模块化设计�
 
 # 使用
 ## 安装
-
+**tianbot** 是Tianbot的软件框架，支持各种不同的传感器、建图、导航、集群框架。  
+**tianbot_core** 是Tianbot各种不同的底盘驱动。现在支持TOM，Tianracer，Tianrover系列。
 ```
 cd ~/catkin_ws/src/
 git clone https://github.com/tianbot/tianbot.git
+git clone https://github.com/tianbot/tianbot_core.git
 cd ~/catkin_ws && catkin_make
 ```
 
