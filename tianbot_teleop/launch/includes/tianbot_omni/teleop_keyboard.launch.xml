@@ -15,7 +15,7 @@
       <param name="stamped" type="bool" value="$(arg stamped)"/>
       <param name="frame_id" type="string" value="$(arg frame_id)"/>
       
-      <param unless="$(eval robot_name=='/')" name="base_frame" type="string" value="$(arg robot_name)/$(arg base_frame)"/>
+      <param unless="$(eval robot_name=='/')" name="frame_id" type="string" value="$(arg robot_name)/$(arg frame_id)"/>
 
       <remap from="base/cmd_vel" to="cmd_vel" />
     </node>
