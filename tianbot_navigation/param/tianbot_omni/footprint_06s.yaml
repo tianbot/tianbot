@@ -1,0 +1,3 @@
+# footprint should be include in another file so can be include according to the base model
+# 06 series (0.215 * 0.185)
+footprint: [[0.105, 0.0925], [0.105, -0.0925], [-0.105, -0.0925], [-0.105, 0.0925]]
