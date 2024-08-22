@@ -10,7 +10,7 @@
             <param name="device_model" type="string"   value="MS200"/>				<!--设备型号: MS200-->
             <param name="frame_id"     type="string"   value="laser"/>  <!--配置frame_id-->
             <param unless="$(eval robot_name=='/')" name="frame_id" type="string" value="$(arg robot_name)/laser"/>
-            <param name="scan_topic"   type="string"   value="scan" />  <!--设置激光雷达的topic名称--> 
+            <param name="scan_topic"   type="string"   value="scan_raw" />  <!--设置激光雷达的topic名称--> 
             <param name="port_name"    type="string"   value="$(arg serial_port)"/> <!--配置串口设备port: dev/ttyUSB0-->
             <param name="baudrate"     type="int"      value="230400"/>		    <!--配置串口波特率:230400-->
             <param name="angle_min"    type="double"   value="0.00" /> 	  <!--设置最小角度，单位度.取值范围[0,360].default=0.0-->
