@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="robot_name" default="$(optenv TIANBOT_NAME /)" doc="robot name [tianbot_No1, tianbot_No2, tianbot_No3, ...]"/>
+
+  <group ns="$(arg robot_name)">
+    <!-- led -->
+    <include file="$(find tianbot_led)/launch/tianbot_led.launch" >
+      <remap from="/tianbot_core/leds" to="led" />
+    </include>
+  </group>
+</launch>
