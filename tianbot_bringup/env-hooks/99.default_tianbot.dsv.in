@@ -1,0 +1,37 @@
+# Set some defaults to tianbot racecar launch environment. This is not designed for users to modify.
+
+# tianbot_omni, tianbot_diff, tianrover, tianbot_mini.
+set;TIANBOT_BASE;tianbot_omni
+
+# 06q1, 08q1, 08q2, 08q8, etc
+set;TIANBOT_BASE_MODEL;06q1
+
+# /dev/ttyUSB1
+set;TIANBOT_BASE_PORT;/dev/tianbot_base
+
+# 115200, 4460800
+set;TIANBOT_BASE_BAUDRATE;460800
+
+# realsense_d415, realsense_d435, astra, astra_pro, xtion, zed,zed2, zed2i, none 
+set;TIANBOT_RGBD_CAMERA;none
+
+# /dev/video0 for most of the usb_cams.If you want init usb_cam in jet_cam, this should be set to none.s
+set;TIANBOT_VIDEO_DEVICE;none
+
+# rplidar_a1, rplidar_a2, rplidar_a3, osight_lidar, velodyne_vlp16, richbeam_lidar, oradar_lidar
+set;TIANBOT_LIDAR; oradar_lidar
+
+# lidar model. a1, a2, a3 for rplidar. iexxx and ie303 for osight. vlp16 for velodyne, etc. 
+set;TIANBOT_LIDAR_MODEL;a1
+
+# /dev/ttyUSB1
+set;TIANBOT_LIDAR_PORT;/dev/tianbot_oradar
+
+# osight 192.168.10.1 richbeam 192.168.198.2 rslidar 192.168.1.200
+set;TIANBOT_LIDAR_IP;192.168.198.2
+
+# none, nmea0183
+set;TIANBOT_GPS;none
+
+# dji, logitech joy mode X, D
+set;TIANBOT_JOY_MODE;dji_dt7
