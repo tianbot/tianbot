@@ -47,11 +47,9 @@
 *.pgm
 
 # speciic cfg
-99.my_tianbot.sh.em
-tianbot_office*.yaml
-tianbot_maps*.yaml
-tianbot_slam/maps/*.yaml
-tianbot_slam/maps/*.png
+99.my_tianbot.dsv.in
+tianbot_navigation2/maps/*.yaml
+tianbot_navigation2/maps/*.png
 # unused file
 imgui.ini
 .vscode
